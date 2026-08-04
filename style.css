@@ -489,9 +489,63 @@ a{ color:inherit; text-decoration:none; }
 .focus-tags span:hover{ background:var(--fc); color:var(--navy-900); font-weight:600; transform:translateY(-2px); }
 
 /* ---------- 11. WHAT WE DO ---------- */
-.do-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:56px; }
-@media(max-width:980px){ .do-grid{ grid-template-columns:repeat(2,1fr); } }
-@media(max-width:620px){ .do-grid{ grid-template-columns:1fr; } }
+/* --- slider --- */
+.do-slider{ margin-top:56px; position:relative; }
+
+.do-track{
+  display:flex; gap:24px;
+  overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  /* Room for the card lift + shadow, which overflow would otherwise clip.
+     Side padding stays 0 so the first snap point rests at scrollLeft 0 and the
+     "at the start" check fires. */
+  padding:10px 0 26px;
+  scrollbar-width:none; -ms-overflow-style:none;
+}
+.do-track::-webkit-scrollbar{ display:none; }
+.do-track:focus-visible{ outline:3px solid var(--blue-500); outline-offset:6px; border-radius:var(--r-lg); }
+
+.do-track > .do-card{
+  flex:0 0 calc((100% - 48px) / 3);
+  scroll-snap-align:start;
+}
+@media(max-width:980px){ .do-track > .do-card{ flex-basis:calc((100% - 24px) / 2); } }
+@media(max-width:620px){
+  .do-track{ gap:16px; }
+  .do-track > .do-card{ flex-basis:86%; }   /* next card peeks, signalling swipe */
+}
+
+/* --- slider controls --- */
+/* Hidden until the script wires them up — without JS the track still scrolls
+   and snaps natively, so dead arrows would be worse than no arrows. */
+.do-controls{ display:none; align-items:center; justify-content:space-between; gap:20px; margin-top:6px; }
+.do-slider.ready .do-controls{ display:flex; }
+@media(max-width:620px){ .do-controls{ justify-content:center; flex-direction:column-reverse; gap:18px; } }
+
+.ds-dots{ display:flex; align-items:center; gap:9px; }
+.ds-dot{
+  width:9px; height:9px; padding:0; border:0; border-radius:999px; cursor:pointer;
+  background:var(--grey-300);
+  transition:width .3s cubic-bezier(.16,1,.3,1), background .3s ease;
+}
+.ds-dot:hover{ background:var(--blue-400); }
+.ds-dot[aria-current="true"]{ width:30px; background:var(--blue-500); }
+
+.ds-arrows{ display:flex; gap:10px; }
+.ds-btn{
+  width:50px; height:50px; border-radius:999px; cursor:pointer;
+  display:grid; place-items:center;
+  background:var(--white); border:2px solid var(--grey-200); color:var(--ink-900);
+  transition:background .22s ease, border-color .22s ease, color .22s ease, transform .22s ease, opacity .22s ease;
+}
+.ds-btn:hover:not(:disabled){
+  background:var(--blue-500); border-color:var(--blue-500); color:#fff;
+  transform:translateY(-2px); box-shadow:var(--sh-blue);
+}
+.ds-btn:disabled{ opacity:.34; cursor:default; }
+
+@media (prefers-reduced-motion:reduce){ .do-track{ scroll-behavior:auto; } }
 
 .do-card{
   position:relative; overflow:hidden; border-radius:var(--r-lg);
