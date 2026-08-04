@@ -694,9 +694,31 @@
   const logoGroup = new THREE.Group();
   scene.add(logoGroup);
 
-  const badgeH = 12.6, badgeW = 9.269, badgeDepth = 2.3;
+  const badgeDepth = 2.3;
 
-  const logoTex = new THREE.TextureLoader().load('logo.png');
+  /* On failure the face material's alphaTest discards every fragment, so the
+     badge silently loses its artwork and shows a bare navy core. The usual cause
+     is opening this page from file://, where the browser refuses to upload a
+     local-origin image as a WebGL texture. Fall back to the same artwork as a
+     data: URI, which carries no origin restriction. logo-embed.js is fetched
+     only on this failure path, so a served site never pays for it. */
+  const logoTex = new THREE.TextureLoader().load('logo.png', undefined, undefined, () => {
+    console.warn('[hero] logo.png could not be uploaded as a WebGL texture '
+      + '(usual cause: opening index.html from file://) — falling back to logo-embed.js.');
+
+    const embed = document.createElement('script');
+    embed.src = 'logo-embed.js';
+    embed.onload = () => {
+      new THREE.TextureLoader().load(window.__LOGO_URI, tex => {
+        tex.anisotropy = 8;
+        faceMat.map = tex;
+        faceMat.needsUpdate = true;
+      });
+    };
+    embed.onerror = () => console.warn('[hero] logo-embed.js is missing — the badge will '
+      + 'render without artwork. Regenerate it with: node tools/gen-logo-embed.js');
+    document.head.appendChild(embed);
+  });
   logoTex.colorSpace = THREE.SRGBColorSpace || logoTex.colorSpace;
   logoTex.anisotropy = 8;
 
@@ -721,13 +743,37 @@
   const rimMat = new THREE.LineBasicMaterial({ color:GOLD, transparent:true, opacity:0.75 });
   coreMesh.add(new THREE.LineSegments(new THREE.EdgesGeometry(coreGeo), rimMat));
 
-  /* The uploaded artwork, mapped 1:1 onto planes flush with the core faces. */
-  const planeGeo = new THREE.PlaneGeometry(badgeW, badgeH);
+  /* The uploaded artwork, mapped 1:1 onto planes flush with the core faces.
+     Take the face depth from the geometry itself: bevelThickness adds to each
+     side, so the beveled core is deeper than badgeDepth and planes placed at
+     badgeDepth/2 end up buried inside it, hiding the artwork. */
+  coreGeo.computeBoundingBox();
+  const halfD = coreGeo.boundingBox.max.z;
+
+  /* logo.png carries transparent padding around the shield, so stretching the
+     whole texture across a badge-sized plane draws the artwork ~25% too small
+     and pushed off-centre. Crop to the opaque pixels instead — x 27..307 of 375
+     and y 9..389 of 395, measured from the alpha channel — and size the plane to
+     the traced outline, so artwork and extruded silhouette sit exactly on top of
+     each other. (v is flipped: three.js loads textures with flipY on.) */
+  const U0 = 27/375, U1 = 308/375, V0 = 1 - 390/395, V1 = 1 - 9/395;
+
+  const shapeBox = new THREE.Box2();
+  SHIELD_OUTLINE.forEach(([x,y]) => shapeBox.expandByPoint(new THREE.Vector2(x,y)));
+
+  const planeGeo = new THREE.PlaneGeometry(
+    shapeBox.max.x - shapeBox.min.x,
+    shapeBox.max.y - shapeBox.min.y
+  );
+  const uv = planeGeo.attributes.uv;
+  for(let i=0;i<uv.count;i++){
+    uv.setXY(i, U0 + uv.getX(i)*(U1-U0), V0 + uv.getY(i)*(V1-V0));
+  }
+
   const faceMat = new THREE.MeshStandardMaterial({
     map:logoTex, transparent:true, alphaTest:0.4, side:THREE.DoubleSide,
     metalness:0.1, roughness:0.45, emissive:0x0C2848, emissiveIntensity:0.22
   });
-  const halfD = badgeDepth/2;
 
   const frontPlane = new THREE.Mesh(planeGeo, faceMat);
   frontPlane.position.z = halfD + 0.015;
