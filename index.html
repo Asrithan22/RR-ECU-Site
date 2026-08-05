@@ -566,6 +566,20 @@
 
   if(smallScreen || reduce || !hasWebGL || typeof THREE === 'undefined'){
     wrapper.classList.add('no3d');
+
+    /* The static hero looks the same whichever guard fired, which makes "the 3D
+       doesn't work on that machine" impossible to diagnose remotely. Name the
+       reason so it can be read off the console on the machine in question. */
+    const why = [];
+    if(smallScreen) why.push('viewport is ' + window.innerWidth + 'px, at or under the 820px cutoff '
+      + '— check Windows display scaling and browser zoom, both of which shrink CSS pixels');
+    if(reduce) why.push('the OS asks for reduced motion '
+      + '— Windows: Settings > Accessibility > Visual effects > Animation effects');
+    if(!hasWebGL) why.push('WebGL is unavailable '
+      + '— check chrome://gpu and that hardware acceleration is enabled');
+    if(typeof THREE === 'undefined') why.push('three.js did not load from cdnjs.cloudflare.com '
+      + '— likely blocked by the network');
+    console.info('[hero] 3D hero skipped, static hero shown instead. Reason: ' + why.join(' | ') + '.');
     return;
   }
 
