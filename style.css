@@ -26,11 +26,40 @@
   --gold-200:#F0DFB8;
   --gold-50:#FBF5E8;
 
-  /* Supporting — community & events only */
+  /* Supporting — community & events.
+     Every hue below is sampled from logo.png's own bars and circuit traces, so
+     the site and the emblem share one palette rather than two that nearly match.
+     Cyan #22B6D9 = circuit traces · violet #38235C = the fourth bar. The
+     brochures colour-code their programme blocks with exactly these three
+     (green chess / orange awards / violet festival), so the event section
+     inherits them instead of inventing a set. */
+  --green-700:#0F6B3B;
   --green-600:#17864B;
   --green-500:#1E9E5A;
+  --green-100:#D8F2E4;
+  --green-50:#EDFAF3;
+
+  --orange-700:#A94C15;
   --orange-600:#D0611D;
   --orange-500:#E8722B;
+  --orange-100:#FBE2D2;
+  --orange-50:#FEF3EB;
+
+  --cyan-800:#0A5C73;          /* text-safe on white; -700 is too light for 12px */
+  --cyan-700:#0E7794;
+  --cyan-600:#1799BC;
+  --cyan-500:#22B6D9;
+  --cyan-400:#3EDEEB;
+  --cyan-100:#D2F1F8;
+  --cyan-50:#EBFAFD;
+
+  --violet-800:#2A1A47;
+  --violet-700:#4A2E7A;
+  --violet-600:#6039A3;
+  --violet-500:#7C4DCC;
+  --violet-400:#9E77E0;
+  --violet-100:#E5DAF8;
+  --violet-50:#F4EFFD;
 
   /* Light surfaces */
   --white:#FFFFFF;
@@ -88,17 +117,30 @@ a{ color:inherit; text-decoration:none; }
 /* ---------- 3. TYPE SCALE ---------- */
 .display{ font-family:var(--font-display); font-weight:800; letter-spacing:-.025em; line-height:1.08; }
 
+/* Each section carries its own accent, so the running order reads in colour and
+   not only in numbers. Every hue is one of the logo's own. --sec is the bright
+   fill (rules, chips, bars); --sec-ink is the text-safe darkening of it. */
+#vision   { --sec:var(--blue-500);   --sec-ink:var(--blue-700); }
+#ecosystem{ --sec:var(--cyan-500);   --sec-ink:var(--cyan-800); }
+#focus    { --sec:var(--gold-500);   --sec-ink:var(--gold-700); }
+#whatwedo { --sec:var(--violet-500); --sec-ink:var(--violet-700); }
+#festival { --sec:var(--green-500);  --sec-ink:var(--green-700); }
+#cta      { --sec:var(--gold-500);   --sec-ink:var(--gold-700); }
+
 .eyebrow{
   display:inline-flex; align-items:center; gap:14px;
   font-family:var(--font-display);
   font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
-  color:var(--blue-600);
+  color:var(--sec-ink, var(--blue-600));
 }
 .eyebrow::before{
   content:''; width:34px; height:2px; border-radius:2px;
-  background:linear-gradient(90deg, var(--gold-500), var(--blue-500));
+  background:linear-gradient(90deg, var(--sec, var(--blue-500)), var(--gold-500));
 }
-.eyebrow .idx{ color:var(--gold-600); font-variant-numeric:tabular-nums; }
+/* the numeral stays gold as a constant brand marker — the section accent shows
+   in the label and the rule instead. A --sec fill here would be far too light. */
+.eyebrow .idx{ color:var(--gold-700); font-variant-numeric:tabular-nums; }
+/* navy sections keep bright ink regardless of their accent */
 .on-navy .eyebrow{ color:var(--blue-400); }
 .on-navy .eyebrow .idx{ color:var(--gold-500); }
 
@@ -445,7 +487,8 @@ a{ color:inherit; text-decoration:none; }
 .focus-board{ margin-top:60px; position:relative; }
 .focus-board::before{
   content:''; position:absolute; left:31px; top:26px; bottom:26px; width:2px; border-radius:2px;
-  background:linear-gradient(180deg, var(--blue-500), var(--blue-400) 26%, var(--gold-500) 52%, var(--green-500) 76%, var(--orange-500));
+  /* stops track the five focus-row accents below, in order */
+  background:linear-gradient(180deg, var(--blue-500), var(--cyan-400) 26%, var(--gold-500) 52%, var(--green-500) 76%, var(--violet-400));
   opacity:.55;
 }
 @media(max-width:700px){ .focus-board::before{ left:23px; } }
@@ -470,8 +513,10 @@ a{ color:inherit; text-decoration:none; }
 .focus-row:hover .focus-num{ transform:scale(1.08); background:var(--fc); color:var(--navy-900); }
 .focus-row[data-c="blue"]{ --fc:var(--blue-500); }
 .focus-row[data-c="sky"]{ --fc:var(--blue-400); }
+.focus-row[data-c="cyan"]{ --fc:var(--cyan-400); }
 .focus-row[data-c="gold"]{ --fc:var(--gold-500); }
 .focus-row[data-c="green"]{ --fc:var(--green-500); }
+.focus-row[data-c="violet"]{ --fc:var(--violet-400); }
 .focus-row[data-c="orange"]{ --fc:var(--orange-500); }
 
 .focus-content h4{
@@ -597,8 +642,8 @@ a{ color:inherit; text-decoration:none; }
 .do-card:nth-child(1){ --dc:var(--gold-500); }
 .do-card:nth-child(2){ --dc:var(--green-500); }
 .do-card:nth-child(3){ --dc:var(--blue-500); }
-.do-card:nth-child(4){ --dc:var(--blue-700); }
-.do-card:nth-child(5){ --dc:var(--gold-600); }
+.do-card:nth-child(4){ --dc:var(--cyan-500); }
+.do-card:nth-child(5){ --dc:var(--violet-500); }
 .do-card:nth-child(6){ --dc:var(--orange-500); }
 
 /* Promise strip */
@@ -616,6 +661,10 @@ a{ color:inherit; text-decoration:none; }
   content:''; position:absolute; right:-4px; top:50%; transform:translateY(-50%);
   width:7px; height:7px; border-radius:50%; background:var(--gold-500);
 }
+/* cycle the separators through the logo hues rather than three identical golds */
+.promise-row span:nth-child(1)::after{ background:var(--cyan-400); }
+.promise-row span:nth-child(2)::after{ background:var(--gold-500); }
+.promise-row span:nth-child(3)::after{ background:var(--violet-400); }
 @media(max-width:620px){
   .promise-row{ flex-direction:column; gap:12px; }
   .promise-row span{ padding:0; }
@@ -634,19 +683,188 @@ a{ color:inherit; text-decoration:none; }
 }
 .stat:hover{ transform:translateY(-5px); box-shadow:var(--sh-md); }
 .stat:nth-child(2){ background:var(--gold-50); border-color:var(--gold-200); }
-.stat:nth-child(3){ background:var(--grey-50); border-color:var(--grey-200); }
+.stat:nth-child(3){ background:var(--cyan-50); border-color:var(--cyan-100); }
 .stat .num{
   font-family:var(--font-display); font-weight:800; font-variant-numeric:tabular-nums;
   font-size:clamp(38px,5vw,54px); line-height:1; letter-spacing:-.03em; color:var(--blue-700);
 }
 .stat:nth-child(2) .num{ color:var(--gold-700); }
-.stat:nth-child(3) .num{ color:var(--navy-700); }
+.stat:nth-child(3) .num{ color:var(--cyan-800); }
 .stat .lbl{
   margin-top:10px; font-size:12.5px; font-weight:700; letter-spacing:.15em; text-transform:uppercase;
   color:var(--ink-700);
 }
 
-/* ---------- 12. CTA + FOOTER ---------- */
+/* ---------- 12. FLAGSHIP FESTIVAL ----------
+   The brochures colour-code the three programmes green / orange / violet, and
+   all three hues come out of logo.png. Each card carries its own tint so the
+   running order reads at a glance, the way the printed poster does. */
+.surface-festival{
+  background:
+    radial-gradient(820px 420px at 6% 0%, var(--violet-50), transparent 68%),
+    radial-gradient(760px 420px at 96% 8%, var(--cyan-50), transparent 66%),
+    radial-gradient(680px 400px at 50% 104%, var(--gold-50), transparent 70%),
+    var(--white);
+}
+
+/* Event facts */
+.ev-facts{
+  margin-top:44px; display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+}
+@media(max-width:1000px){ .ev-facts{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:560px){ .ev-facts{ grid-template-columns:1fr; } }
+.ev-fact{
+  display:flex; gap:14px; align-items:flex-start;
+  padding:20px 18px; border-radius:var(--r-md);
+  background:var(--white); border:1px solid var(--grey-200); box-shadow:var(--sh-sm);
+  border-top:4px solid var(--efc);
+}
+.ev-fact .ef-ic{
+  flex:0 0 38px; height:38px; border-radius:11px;
+  display:grid; place-items:center; color:#fff; background:var(--efc);
+}
+.ev-fact b{
+  display:block; font-size:11px; font-weight:800; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--efcd);
+}
+.ev-fact p{ margin-top:5px; font-size:15px; line-height:1.55; color:var(--ink-900); font-weight:600; }
+.ef-date { --efc:var(--gold-500);   --efcd:var(--gold-700); }
+.ef-venue{ --efc:var(--cyan-500);   --efcd:var(--cyan-700); }
+.ef-time { --efc:var(--violet-500); --efcd:var(--violet-700); }
+.ef-entry{ --efc:var(--green-500);  --efcd:var(--green-700); }
+
+/* Programme cards */
+.prog-grid{
+  margin-top:20px; display:grid; grid-template-columns:repeat(3,1fr); gap:22px;
+}
+@media(max-width:940px){ .prog-grid{ grid-template-columns:1fr; } }
+.prog-card{
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column;
+  padding:30px 26px 26px; border-radius:var(--r-lg);
+  background:var(--pct); border:1px solid var(--pcb);
+  transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease;
+}
+.prog-card:hover{ transform:translateY(-6px); box-shadow:var(--sh-lg); }
+.prog-card::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:5px;
+  background:linear-gradient(90deg, var(--pc), var(--pcd));
+}
+.pg-time{
+  align-self:flex-start; padding:7px 15px; border-radius:999px;
+  background:var(--pcd); color:#fff;
+  font-family:var(--font-display); font-size:12px; font-weight:800;
+  letter-spacing:.1em; text-transform:uppercase;
+}
+.prog-card h3{
+  margin-top:16px; font-family:var(--font-display); font-weight:800;
+  font-size:clamp(19px,2vw,23px); line-height:1.24; letter-spacing:-.02em; color:var(--ink-900);
+}
+.pg-lede{ margin-top:12px; font-size:15.2px; line-height:1.68; color:var(--ink-700); }
+.pg-label{
+  margin-top:20px; font-size:11px; font-weight:800; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--pcd);
+}
+.pg-chips{ margin-top:11px; display:flex; flex-wrap:wrap; gap:8px; }
+.pg-chips span{
+  padding:6px 13px; border-radius:999px;
+  background:var(--white); border:1px solid var(--pcb);
+  font-size:13px; font-weight:700; color:var(--pcd);
+}
+.pg-list{ margin-top:11px; list-style:none; display:flex; flex-direction:column; gap:8px; }
+.pg-list li{
+  position:relative; padding-left:22px; font-size:15px; line-height:1.6; color:var(--ink-700);
+}
+.pg-list li::before{
+  content:''; position:absolute; left:0; top:.55em;
+  width:9px; height:9px; border-radius:3px; background:var(--pc);
+}
+.pg-foot{
+  margin-top:auto; padding-top:20px;
+  font-size:13.2px; font-weight:700; color:var(--pcd);
+}
+.prog-chess { --pc:var(--green-500);  --pcd:var(--green-700);  --pct:var(--green-50);  --pcb:var(--green-100); }
+.prog-awards{ --pc:var(--orange-500); --pcd:var(--orange-700); --pct:var(--orange-50); --pcb:var(--orange-100); }
+.prog-fest  { --pc:var(--violet-500); --pcd:var(--violet-700); --pct:var(--violet-50); --pcb:var(--violet-100); }
+
+/* All-day fun zone */
+.funzone{
+  margin-top:22px; padding:32px 30px; border-radius:var(--r-lg);
+  background:
+    radial-gradient(600px 300px at 88% 0%, rgba(124,77,204,.42), transparent 64%),
+    radial-gradient(520px 280px at 4% 100%, rgba(34,182,217,.30), transparent 62%),
+    var(--navy-800);
+  display:flex; align-items:center; justify-content:space-between; gap:26px; flex-wrap:wrap;
+}
+.fz-head h3{
+  font-family:var(--font-display); font-weight:800;
+  font-size:clamp(20px,2.2vw,26px); letter-spacing:-.02em; color:#fff;
+}
+.fz-head p{ margin-top:7px; font-size:14.8px; color:var(--on-dark-2); }
+.fz-chips{ display:flex; flex-wrap:wrap; gap:10px; }
+/* solid bright fills with navy ink — keeps every chip well clear of 8:1 */
+.fz-chips span{
+  padding:9px 16px; border-radius:999px;
+  font-family:var(--font-display); font-size:13.5px; font-weight:800;
+  letter-spacing:.02em; color:var(--navy-900);
+}
+.fzc-1{ background:var(--gold-500); }
+.fzc-2{ background:var(--cyan-400); }
+.fzc-3{ background:#6BD66C; }
+.fzc-4{ background:var(--orange-500); }
+.fzc-5{ background:var(--violet-400); }
+
+/* Sponsorship */
+.spon-grid{
+  margin-top:22px; display:grid; grid-template-columns:1.05fr .95fr; gap:22px;
+}
+@media(max-width:940px){ .spon-grid{ grid-template-columns:1fr; } }
+.spon-card{
+  display:flex; flex-direction:column;
+  padding:32px 28px; border-radius:var(--r-lg);
+  background:var(--white); border:1px solid var(--grey-200); box-shadow:var(--sh-sm);
+  border-left:5px solid var(--scc);
+}
+.spon-card h3{
+  font-family:var(--font-display); font-weight:800;
+  font-size:clamp(19px,2vw,24px); letter-spacing:-.02em; color:var(--ink-900);
+}
+.spon-card ul{ margin-top:16px; list-style:none; display:flex; flex-direction:column; gap:10px; }
+.spon-card li{
+  position:relative; padding-left:26px; font-size:15.2px; line-height:1.62; color:var(--ink-700);
+}
+.spon-card li::before{
+  content:''; position:absolute; left:0; top:.42em;
+  width:15px; height:15px; border-radius:50%;
+  background:var(--scc);
+}
+.spon-card li::after{
+  content:''; position:absolute; left:4.4px; top:.72em;
+  width:6px; height:3.2px; border-left:2px solid #fff; border-bottom:2px solid #fff;
+  transform:rotate(-45deg);
+}
+.sc-why{ --scc:var(--blue-500); }
+.sc-who{ --scc:var(--gold-500); }
+.sc-contact{
+  margin-top:auto; padding-top:26px; display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+}
+.sc-phone{
+  font-family:var(--font-display); font-weight:800; font-size:16.5px;
+  color:var(--blue-700); border-bottom:2px solid var(--blue-100);
+  transition:color .22s ease, border-color .22s ease;
+}
+.sc-phone:hover{ color:var(--blue-500); border-color:var(--blue-500); }
+
+.ev-slogan{
+  margin-top:40px; text-align:center;
+  font-family:var(--font-display); font-weight:800;
+  font-size:clamp(19px,2.4vw,28px); letter-spacing:-.02em;
+}
+.ev-slogan .s1{ color:var(--green-700); }
+.ev-slogan .s2{ color:var(--orange-700); }
+.ev-slogan .s3{ color:var(--violet-700); }
+
+/* ---------- 13. CTA + FOOTER ---------- */
 #cta{ text-align:center; }
 #cta .eyebrow{ justify-content:center; }
 #cta .section-title{ margin-inline:auto; max-width:22ch; }
