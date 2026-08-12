@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Stage lights over a crowd">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2=".4" y2="1">
+      <stop offset="0" stop-color="#123B66"/><stop offset=".62" stop-color="#071B33"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".82" cy=".04" r=".95">
+      <stop offset="0" stop-color="#D4A64A" stop-opacity=".85"/>
+      <stop offset=".55" stop-color="#D4A64A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0DFB8" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#F0DFB8" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <rect width="1200" height="750" fill="url(#glow)"/>
+
+  <!-- spotlight beams from the rig -->
+  <g>
+    <path d="M300 0 L215 560 L455 560 Z" fill="url(#beam)"/>
+    <path d="M600 0 L520 600 L760 600 Z" fill="url(#beam)" opacity=".8"/>
+    <path d="M900 0 L840 540 L1060 540 Z" fill="url(#beam)" opacity=".65"/>
+  </g>
+
+  <!-- confetti -->
+  <g fill="none" stroke-width="9" stroke-linecap="round">
+    <path d="M170 150 l0 34" stroke="#22B6D9"/><path d="M1040 205 l0 34" stroke="#1E9E5A"/>
+    <path d="M415 105 l0 30" stroke="#E8722B"/><path d="M735 165 l0 30" stroke="#7C4DCC"/>
+    <path d="M955 95 l0 30" stroke="#D4A64A"/><path d="M255 265 l0 28" stroke="#5AA9F0"/>
+  </g>
+
+  <!-- crowd silhouette -->
+  <g fill="#04101F" opacity=".92">
+    <path d="M0 750 L0 640 q60-52 120 0 q56-58 118 0 q62-50 124 0 q58-56 120 0 q64-48 128 0 q56-58 118 0 q62-50 124 0 q58-56 120 0 q54-46 108 0 L1200 750 Z"/>
+  </g>
+  <g fill="#0C2848">
+    <circle cx="120" cy="628" r="34"/><circle cx="356" cy="618" r="32"/>
+    <circle cx="600" cy="626" r="36"/><circle cx="846" cy="618" r="32"/><circle cx="1084" cy="630" r="34"/>
+  </g>
+</svg>

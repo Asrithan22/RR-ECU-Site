@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="A connected network of people across the city">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2=".4" y2="1">
+      <stop offset="0" stop-color="#123B66"/><stop offset=".62" stop-color="#071B33"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".82" cy=".04" r=".95">
+      <stop offset="0" stop-color="#22B6D9" stop-opacity=".9"/>
+      <stop offset=".55" stop-color="#22B6D9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <rect width="1200" height="750" fill="url(#glow)"/>
+
+  <!-- links -->
+  <g stroke="#3EDEEB" stroke-width="4" opacity=".5" fill="none">
+    <path d="M180 520 L400 300 L640 430 L880 250 L1050 420"/>
+    <path d="M400 300 L520 560 L640 430"/>
+    <path d="M880 250 L760 520 L1050 420"/>
+    <path d="M180 520 L520 560"/>
+    <path d="M640 430 L760 520"/>
+    <path d="M400 300 L880 250" opacity=".55"/>
+  </g>
+
+  <!-- nodes: person glyphs in a ring -->
+  <g>
+    <g transform="translate(400 300)"><circle r="52" fill="#22B6D9"/><g fill="#04101F"><circle cy="-12" r="15"/><path d="M-24 26 a24 24 0 0 1 48 0 Z"/></g></g>
+    <g transform="translate(880 250)"><circle r="52" fill="#D4A64A"/><g fill="#04101F"><circle cy="-12" r="15"/><path d="M-24 26 a24 24 0 0 1 48 0 Z"/></g></g>
+    <g transform="translate(640 430)"><circle r="58" fill="#EBF1F8"/><g fill="#071B33"><circle cy="-14" r="17"/><path d="M-27 29 a27 27 0 0 1 54 0 Z"/></g></g>
+    <g transform="translate(180 520)"><circle r="44" fill="#1E9E5A"/><g fill="#04101F"><circle cy="-10" r="13"/><path d="M-21 22 a21 21 0 0 1 42 0 Z"/></g></g>
+    <g transform="translate(520 560)"><circle r="42" fill="#7C4DCC"/><g fill="#04101F"><circle cy="-10" r="12"/><path d="M-20 21 a20 20 0 0 1 40 0 Z"/></g></g>
+    <g transform="translate(760 520)"><circle r="42" fill="#5AA9F0"/><g fill="#04101F"><circle cy="-10" r="12"/><path d="M-20 21 a20 20 0 0 1 40 0 Z"/></g></g>
+    <g transform="translate(1050 420)"><circle r="44" fill="#E8722B"/><g fill="#04101F"><circle cy="-10" r="13"/><path d="M-21 22 a21 21 0 0 1 42 0 Z"/></g></g>
+  </g>
+
+  <path d="M0 750 L0 660 h1200 L1200 750 Z" fill="#04101F" opacity=".5"/>
+</svg>

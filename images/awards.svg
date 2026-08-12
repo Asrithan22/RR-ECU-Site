@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="A medal and stars for community achievement">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2=".4" y2="1">
+      <stop offset="0" stop-color="#123B66"/><stop offset=".62" stop-color="#071B33"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".82" cy=".04" r=".95">
+      <stop offset="0" stop-color="#7C4DCC" stop-opacity=".95"/>
+      <stop offset=".55" stop-color="#7C4DCC" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="disc" x1="0" y1="0" x2=".3" y2="1">
+      <stop offset="0" stop-color="#F0DFB8"/><stop offset=".55" stop-color="#D4A64A"/><stop offset="1" stop-color="#9C7126"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <rect width="1200" height="750" fill="url(#glow)"/>
+
+  <!-- ribbons -->
+  <g transform="translate(600 0)">
+    <path d="M-150 60 L-40 330 L-120 360 L-220 90 Z" fill="#6039A3"/>
+    <path d="M150 60 L40 330 L120 360 L220 90 Z" fill="#4A2E7A"/>
+  </g>
+
+  <!-- medal -->
+  <g transform="translate(600 430)">
+    <circle r="150" fill="url(#disc)"/>
+    <circle r="118" fill="#071B33" opacity=".22"/>
+    <circle r="118" fill="none" stroke="#F0DFB8" stroke-width="5" opacity=".7"/>
+    <path d="M0 -84 L25 -26 L88 -26 L37 12 L57 74 L0 37 L-57 74 L-37 12 L-88 -26 L-25 -26 Z" fill="#FFFFFF"/>
+  </g>
+
+  <!-- sparkle stars -->
+  <g fill="#F0DFB8">
+    <path d="M215 205 l14 34 34 14 -34 14 -14 34 -14-34 -34-14 34-14 Z"/>
+    <path d="M980 300 l11 27 27 11 -27 11 -11 27 -11-27 -27-11 27-11 Z" opacity=".85"/>
+    <path d="M330 560 l9 22 22 9 -22 9 -9 22 -9-22 -22-9 22-9 Z" opacity=".7"/>
+    <path d="M905 585 l8 19 19 8 -19 8 -8 19 -8-19 -19-8 19-8 Z" opacity=".6"/>
+  </g>
+
+  <path d="M0 750 L0 660 h1200 L1200 750 Z" fill="#04101F" opacity=".5"/>
+</svg>

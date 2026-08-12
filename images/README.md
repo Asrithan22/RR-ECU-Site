@@ -1,16 +1,35 @@
-# Photo slots
+# Card artwork
 
-The six cards in the **What We Do** section each have a photo slot. Drop a file
-here with the matching name and it appears automatically — no code change needed.
+The six cards in the **What We Do** section each have an image slot. Every slot
+currently holds a brand-palette **illustration** so the section looks finished,
+but a real photograph beats an illustration every time — see *Replacing with
+photos* below.
 
-| File               | Card                            |
-| ------------------ | ------------------------------- |
-| `events.jpg`       | Events & Festivals              |
-| `sports.jpg`       | Sports & Tournaments            |
-| `workshops.jpg`    | Workshops & Mentorship          |
-| `networking.jpg`   | Networking & Business Connect   |
-| `awards.jpg`       | Awards & Recognition            |
-| `family.jpg`       | Family Fun, Games & Activities  |
+| File                | Card                            | Illustration              |
+| ------------------- | ------------------------------- | ------------------------- |
+| `events.svg`        | Events & Festivals              | stage lights over a crowd |
+| `sports.svg`        | Sports & Tournaments            | trophy, chessboard, ball  |
+| `workshops.svg`     | Workshops & Mentorship          | cap, books, idea bulb     |
+| `networking.svg`    | Networking & Business Connect   | connected people          |
+| `awards.svg`        | Awards & Recognition            | medal and stars           |
+| `family.svg`        | Family Fun, Games & Activities  | family with balloons      |
+
+Each illustration is a hand-authored SVG under 2.5 KB, drawn on the same navy
+base with the card's own accent as a corner glow, so it sits correctly under the
+grid and scrim the CSS lays over the top. Keep the focal subject in the upper
+two-thirds — the bottom is darkened and the icon badge sits at bottom-left.
+
+## Replacing with photos
+
+Drop your file in here and update the one path in `index.html`:
+
+```html
+<article class="do-card" style="--photo:url('images/events.jpg')">
+```
+
+Real photographs from ECU events remain the single biggest upgrade available to
+this page. The illustrations exist so the section never looks unfinished while
+you gather them — they are not the destination.
 
 ## Specification
 
@@ -21,16 +40,6 @@ here with the matching name and it appears automatically — no code change need
   single biggest upgrade available to this page — stock imagery reads as generic
   and undercuts the premium direction.
 
-A dark navy→accent gradient with a subtle grid renders in any slot that has no
-file yet, so missing photos look deliberate rather than broken. The page is
-safe to publish before the photos arrive.
-
-## Changing a filename
-
-Slots are wired in `index.html` via a CSS variable on each card:
-
-```html
-<article class="do-card" style="--i:1; --photo:url('images/events.jpg')">
-```
-
-Edit that path to point at any file you prefer.
+A dark navy→accent gradient with a subtle grid also sits behind every slot, so
+even a broken or missing path degrades to something deliberate rather than an
+empty box.

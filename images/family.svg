@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="A family together with balloons and kites">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2=".4" y2="1">
+      <stop offset="0" stop-color="#123B66"/><stop offset=".62" stop-color="#071B33"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".82" cy=".04" r=".95">
+      <stop offset="0" stop-color="#E8722B" stop-opacity=".9"/>
+      <stop offset=".55" stop-color="#E8722B" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <rect width="1200" height="750" fill="url(#glow)"/>
+
+  <!-- balloons -->
+  <g stroke="#C2D1E3" stroke-width="3" opacity=".55" fill="none">
+    <path d="M215 200 q18 90 -8 190"/><path d="M370 150 q-16 100 6 220"/>
+    <path d="M960 185 q20 95 -6 200"/><path d="M1075 245 q-18 80 4 160"/>
+  </g>
+  <g>
+    <ellipse cx="215" cy="180" rx="60" ry="72" fill="#D4A64A"/>
+    <ellipse cx="370" cy="130" rx="54" ry="66" fill="#22B6D9"/>
+    <ellipse cx="960" cy="165" rx="56" ry="68" fill="#7C4DCC"/>
+    <ellipse cx="1075" cy="225" rx="48" ry="58" fill="#1E9E5A"/>
+    <g fill="#FFFFFF" opacity=".3">
+      <ellipse cx="196" cy="156" rx="16" ry="22"/><ellipse cx="352" cy="108" rx="14" ry="19"/>
+      <ellipse cx="942" cy="142" rx="15" ry="20"/><ellipse cx="1060" cy="205" rx="12" ry="16"/>
+    </g>
+  </g>
+
+  <!-- family group: two adults, two children, holding hands -->
+  <g fill="#EBF1F8">
+    <g transform="translate(455 470)">
+      <circle cy="-96" r="40"/><path d="M-46 -44 h92 l16 148 h-36 l-8-84 -8 84 h-28 l-8-84 -8 84 h-36 Z"/>
+    </g>
+    <g transform="translate(745 470)">
+      <circle cy="-96" r="40"/><path d="M-50 -44 h100 l14 148 h-38 l-6-80 -8 80 h-28 l-8-80 -6 80 h-34 Z"/>
+    </g>
+    <g transform="translate(580 512)" opacity=".92">
+      <circle cy="-64" r="29"/><path d="M-33 -28 h66 l10 104 h-26 l-6-56 -6 56 h-20 l-6-56 -6 56 h-22 Z"/>
+    </g>
+    <g transform="translate(650 520)" opacity=".92">
+      <circle cy="-58" r="26"/><path d="M-30 -24 h60 l9 96 h-24 l-5-52 -5 52 h-18 l-5-52 -5 52 h-20 Z"/>
+    </g>
+  </g>
+  <!-- joined hands -->
+  <g stroke="#EBF1F8" stroke-width="11" stroke-linecap="round" opacity=".9">
+    <path d="M508 440 L556 462"/><path d="M604 452 L636 456"/><path d="M676 456 L700 440"/>
+  </g>
+
+  <path d="M0 750 L0 618 h1200 L1200 750 Z" fill="#04101F" opacity=".55"/>
+</svg>
