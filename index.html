@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Electronic City United — One City, One Community, One Family</title>
 <meta name="description" content="Electronic City United is an opportunity engine connecting 51,000+ families across 200+ apartment communities in Electronic City, Bengaluru — through culture, growth and innovation.">
-<meta name="theme-color" content="#071B33">
+<meta name="theme-color" content="#5B3FA8">
 <link rel="icon" href="logo.png" type="image/png">
 
 <meta property="og:title" content="Electronic City United — One City, One Community, One Family">
@@ -128,8 +128,8 @@
   </div>
 </section>
 
-<!-- ==================== 02 · ECOSYSTEM (SOFT GREY) ==================== -->
-<section class="section surface-grey" id="ecosystem">
+<!-- ==================== 02 · ECOSYSTEM (WARM PEACH) ==================== -->
+<section class="section surface-peach" id="ecosystem">
   <div class="wrap">
     <p class="eyebrow reveal"><span class="idx">02</span> Our Collaborative Ecosystem</p>
     <h2 class="section-title reveal" style="--i:1">Three pillars, working in synergy</h2>
@@ -177,8 +177,8 @@
   </div>
 </section>
 
-<!-- ==================== 03 · FOCUS AREAS (NAVY) ==================== -->
-<section class="section surface-navy on-navy" id="focus">
+<!-- ==================== 03 · FOCUS AREAS (MINT) ==================== -->
+<section class="section surface-mint" id="focus">
   <div class="wrap">
     <p class="eyebrow reveal"><span class="idx">03</span> Our Focus Areas</p>
     <h2 class="section-title reveal" style="--i:1">Five pillars, one connected community</h2>
@@ -463,8 +463,8 @@
   </div>
 </section>
 
-<!-- ==================== 06 · CTA (NAVY) ==================== -->
-<section class="section surface-navy on-navy" id="cta">
+<!-- ==================== 06 · CTA (VIVID GRADIENT) ==================== -->
+<section class="section surface-vivid on-navy" id="cta">
   <div class="wrap">
     <p class="eyebrow reveal"><span class="idx">06</span> Join Us</p>
     <h2 class="section-title reveal" style="--i:1">Be part of Electronic City United</h2>
@@ -778,7 +778,7 @@
   renderer.setClearColor(0x000000, 0);
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x071B33, 0.016);
+  scene.fog = new THREE.FogExp2(0x2A2456, 0.013);
   const camera = new THREE.PerspectiveCamera(45, W/H, 0.1, 500);
 
   const gctx = glowCanvas.getContext('2d');
@@ -787,22 +787,29 @@
 
   /* ---------- brand palette, in 3D ---------- */
   const NAVY = 0x071B33, BLUE = 0x2387E8, SKY = 0x5AA9F0,
-        GOLD = 0xD4A64A, GREEN = 0x1E9E5A, ORANGE = 0xE8722B;
+        GOLD = 0xD4A64A, GREEN = 0x1E9E5A, ORANGE = 0xE8722B,
+        TEAL = 0x12B9A6, CORAL = 0xF2557F, AMBER = 0xF5B324, VIOLET = 0x7C4DCC;
 
-  /* ---------- lighting ---------- */
-  scene.add(new THREE.AmbientLight(0x2C4767, 1.0));
-  const dirLight = new THREE.DirectionalLight(0xD6E9FC, 0.8);
+  /* ---------- lighting ----------
+     Warmer and brighter than the original navy-only rig. The ambient was a dark
+     slate that left every surface reading as navy no matter what colour it was;
+     coral and teal rim lights now push warm and cool from opposite sides. */
+  scene.add(new THREE.AmbientLight(0x49557C, 0.95));
+  const dirLight = new THREE.DirectionalLight(0xFFF3E4, 0.7);
   dirLight.position.set(30, 60, 20);
   scene.add(dirLight);
-  const rimBlue = new THREE.PointLight(BLUE, 3.4, 220);
+  const rimBlue = new THREE.PointLight(TEAL, 3.2, 240);
   rimBlue.position.set(-40, 30, 40);
   scene.add(rimBlue);
-  const rimGold = new THREE.PointLight(GOLD, 2.2, 220);
+  const rimGold = new THREE.PointLight(CORAL, 2.8, 240);
   rimGold.position.set(40, 26, -30);
   scene.add(rimGold);
+  const rimWarm = new THREE.PointLight(AMBER, 2.0, 200);
+  rimWarm.position.set(0, 50, -60);
+  scene.add(rimWarm);
 
   /* ---------- ground grid ---------- */
-  const grid = new THREE.GridHelper(260, 60, 0x123B66, 0x0C2848);
+  const grid = new THREE.GridHelper(260, 60, 0x3C7FA8, 0x2E3A6B);
   grid.position.y = -0.05;
   scene.add(grid);
 
@@ -810,16 +817,21 @@
   const cityGroup = new THREE.Group();
   scene.add(cityGroup);
 
-  const buildingColors = [0x0C2848, 0x123B66, 0x081F3B, 0x0E3157];
-  const edgeColors     = [BLUE, SKY, GOLD, GREEN, ORANGE];
+  /* Four shades of navy previously — which is what made the skyline read as one
+     dark blue mass. These are the brand hues at building weight instead. */
+  const buildingColors = [0x143D6B, 0x0F4C5C, 0x2E1F52, 0x5A2440, 0x11402F];
+  const edgeColors     = [BLUE, TEAL, AMBER, CORAL, VIOLET, GREEN];
   const buildingNodes  = [];
 
   function makeBuilding(x, z, w, d, h, colorIdx){
     const geo = new THREE.BoxGeometry(w, h, d);
+    const base = buildingColors[colorIdx % buildingColors.length];
     const mat = new THREE.MeshStandardMaterial({
-      color: buildingColors[colorIdx % buildingColors.length],
-      metalness:0.5, roughness:0.42,
-      emissive:NAVY, emissiveIntensity:0.4
+      color: base,
+      metalness:0.35, roughness:0.5,
+      /* self-lit in its own hue rather than in navy, so each tower keeps its
+         colour in shadow instead of sinking back to blue */
+      emissive:base, emissiveIntensity:0.16
     });
     const mesh = new THREE.Mesh(geo, mat);
     mesh.position.set(x, h/2, z);
@@ -831,27 +843,39 @@
       new THREE.LineBasicMaterial({ color:edgeColor, transparent:true, opacity:0.9 })
     ));
 
-    buildingNodes.push({ mesh, colorHex:edgeColor, h });
+    /* grow0 staggers the rise so the skyline ripples up rather than jumping as
+       one slab. Towers nearer the centre start first, so the city opens outward
+       from behind the badge. */
+    const grow0 = 0.04 + Math.min(Math.hypot(x, z) / 90, 1) * 0.26;
+    buildingNodes.push({ mesh, colorHex:edgeColor, h, grow0 });
   }
 
-  const ringRadius = 34, count = 16;
-  for(let i=0;i<count;i++){
-    const angle = (i/count)*Math.PI*2;
-    const r = ringRadius + (i%3)*9;
-    makeBuilding(
-      Math.cos(angle)*r, Math.sin(angle)*r,
-      4+Math.random()*3, 4+Math.random()*3,
-      10+Math.random()*26+(i%4===0?14:0), i
-    );
-  }
-  for(let i=0;i<10;i++){
-    const angle = (i/10)*Math.PI*2 + 0.3;
-    const r = 16 + (i%2)*6;
-    makeBuilding(
-      Math.cos(angle)*r, Math.sin(angle)*r,
-      3+Math.random()*2, 3+Math.random()*2,
-      6+Math.random()*10, i+2
-    );
+  /* The towers grow up out of the ground as you scroll rather than standing
+     there fully built — standing fully built is what made them crowd the frame
+     and fight the circuit sequence for attention. Set CITY_ENABLED to false to
+     drop the skyline entirely; the dock target below already handles its
+     absence rather than assuming a tallest tower exists. */
+  const CITY_ENABLED = false;
+  if(CITY_ENABLED){
+    const ringRadius = 34, count = 16;
+    for(let i=0;i<count;i++){
+      const angle = (i/count)*Math.PI*2;
+      const r = ringRadius + (i%3)*9;
+      makeBuilding(
+        Math.cos(angle)*r, Math.sin(angle)*r,
+        4+Math.random()*3, 4+Math.random()*3,
+        10+Math.random()*26+(i%4===0?14:0), i
+      );
+    }
+    for(let i=0;i<10;i++){
+      const angle = (i/10)*Math.PI*2 + 0.3;
+      const r = 16 + (i%2)*6;
+      makeBuilding(
+        Math.cos(angle)*r, Math.sin(angle)*r,
+        3+Math.random()*2, 3+Math.random()*2,
+        6+Math.random()*10, i+2
+      );
+    }
   }
 
   /* ---------- circuit links between rooftops ---------- */
@@ -930,7 +954,7 @@
 
   /* Navy core with a gold rim — replaces the old silver/chrome body. */
   const coreMat = new THREE.MeshStandardMaterial({
-    color:0x0C2848, metalness:0.82, roughness:0.3, emissive:NAVY, emissiveIntensity:0.3
+    color:0x2E2A63, metalness:0.7, roughness:0.34, emissive:0x241F52, emissiveIntensity:0.35
   });
   const coreMesh = new THREE.Mesh(coreGeo, coreMat);
   logoGroup.add(coreMesh);
@@ -985,14 +1009,208 @@
   logoLight.position.set(0, 14, 14);
   scene.add(logoLight);
 
-  /* ---------- choreography ---------- */
   const ease    = t => t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
   const lerp    = (a,b,t) => a+(b-a)*t;
   const clamp01 = v => Math.max(0, Math.min(1, v));
 
-  const CAM_STREET = { pos:new THREE.Vector3(0, 12, 46), look:new THREE.Vector3(0,8,0) };
-  const CAM_MID    = { pos:new THREE.Vector3(0, 40, 34), look:new THREE.Vector3(0,4,0) };
-  const CAM_TOP    = { pos:new THREE.Vector3(0, 95, 6),  look:new THREE.Vector3(0,0,0) };
+  /* ---------- idle neon traces ----------
+     Glowing circuit runs that flow downward while the banner is sitting at the
+     top of the page, and hold still the moment the reader starts scrolling —
+     the scroll sequence is the story from then on, and two things moving at
+     once just competes with it.
+
+     Tubes rather than lines: WebGL ignores LineBasicMaterial.linewidth on
+     essentially every desktop driver, so a Line renders one hairline pixel no
+     matter what. MeshBasicMaterial keeps them unlit so they read as neon. */
+  const idleGroup = new THREE.Group();
+  scene.add(idleGroup);
+
+  const IDLE_START = -52;        /* off-screen left */
+  const IDLE_SPAN  = 104;        /* horizontal travel before wrapping */
+  const idleTraces = [];
+  const IDLE_HUES = [0x4FC3FF, 0x2E7BFF, 0x7FE9DC, 0x3FA9F5, 0x9E77E0];
+
+  function idleTraceGeo(bend, len){
+    /* a run to the right, a filleted right-angle jog, then a run on again —
+       every corner rounded rather than square, as in the reference */
+    const pts = [
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(len*0.42, 0, 0),
+      new THREE.Vector3(len*0.58, bend, 0),
+      new THREE.Vector3(len, bend, 0)
+    ];
+    return new THREE.TubeGeometry(
+      new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.04), 30, 0.17, 6, false);
+  }
+
+  const dotGeo = new THREE.SphereGeometry(0.42, 10, 10);
+  for(let i=0;i<16;i++){
+    const hue = IDLE_HUES[i % IDLE_HUES.length];
+    const len = 15 + (i % 5) * 7;
+    const bend = ((i % 2) ? 1 : -1) * (1.4 + (i % 3) * 1.3);
+    const mat = new THREE.MeshBasicMaterial({ color:hue, transparent:true, opacity:0.85 });
+    const grp = new THREE.Group();
+    grp.add(new THREE.Mesh(idleTraceGeo(bend, len), mat));
+    const dot = new THREE.Mesh(dotGeo, mat);
+    dot.position.set(len, bend, 0);
+    grp.add(dot);
+    /* spread over height and depth; x is driven by the flow each frame */
+    grp.position.set(IDLE_START, 1.5 + (i % 8) * 3.1, -22 + (i % 6) * 8);
+    idleGroup.add(grp);
+    idleTraces.push({ grp, mat, phase:(i * 149) % IDLE_SPAN });
+  }
+
+  /* Advances only while the banner is at rest — see the render loop. */
+  let idleClock = 0, idleLast = performance.now();
+
+  /* ---------- incoming circuit network ----------
+     The banner reads left to right: traces crawl in from off-screen left picking
+     up junctions as they go, then on the right they resolve into the shield
+     outline, the solid badge cross-fades in over it, and the badge finally docks
+     on the tallest rooftop. */
+  const netGroup = new THREE.Group();
+  scene.add(netGroup);
+
+  /* Resample to equal-length steps. setDrawRange counts vertices, so on a raw
+     polyline of long runs and short jogs the draw front lurches; even spacing
+     makes it advance at a constant speed. */
+  function resample(pts, n){
+    const segs = [];
+    let total = 0;
+    for(let i=1;i<pts.length;i++){
+      const d = pts[i].distanceTo(pts[i-1]);
+      segs.push(d); total += d;
+    }
+    const out = [pts[0].clone()];
+    const step = total/(n-1);
+    let si = 0, acc = 0;
+    for(let k=1;k<n;k++){
+      const want = k*step;
+      while(si < segs.length-1 && acc + segs[si] < want){ acc += segs[si]; si++; }
+      const t = segs[si] ? (want-acc)/segs[si] : 1;
+      out.push(new THREE.Vector3().lerpVectors(pts[si], pts[si+1], Math.min(Math.max(t,0),1)));
+    }
+    return out;
+  }
+
+  const NET_X0 = -60, NET_X1 = -8.5, NET_SPAN = NET_X1 - NET_X0;
+  const NET_N  = 150;
+  const traces = [], joints = [];
+  const jointGeo = new THREE.SphereGeometry(0.46, 10, 10);
+
+  function buildTrace(y0, z0, hue, jog, runs){
+    const raw = [new THREE.Vector3(NET_X0, y0, z0)];
+    const corners = [];
+    let x = NET_X0, y = y0;
+    for(let i=0;i<runs;i++){
+      x += (NET_SPAN/runs) * (0.55 + jog*0.5);
+      if(x > NET_X1) x = NET_X1;
+      raw.push(new THREE.Vector3(x, y, z0));
+      corners.push(new THREE.Vector3(x, y, z0));
+      y += (i % 2 ? -1 : 1) * (1.4 + jog*3.2);
+      raw.push(new THREE.Vector3(x, y, z0));
+      corners.push(new THREE.Vector3(x, y, z0));
+    }
+    raw.push(new THREE.Vector3(NET_X1, y, z0));
+
+    const geo = new THREE.BufferGeometry().setFromPoints(resample(raw, NET_N));
+    geo.setDrawRange(0, 0);
+    const mat = new THREE.LineBasicMaterial({ color:hue, transparent:true, opacity:0.95 });
+    netGroup.add(new THREE.Line(geo, mat));
+    traces.push({ geo, mat });
+
+    const jmat = new THREE.MeshBasicMaterial({ color:hue, transparent:true, opacity:1 });
+    corners.forEach(c => {
+      const m = new THREE.Mesh(jointGeo, jmat);
+      m.position.copy(c);
+      m.scale.setScalar(0.001);
+      netGroup.add(m);
+      /* x doubles as the draw-front position, which is what pops the joint */
+      joints.push({ mesh:m, mat:jmat, t:(c.x - NET_X0)/NET_SPAN });
+    });
+  }
+
+  const NET_HUES = [BLUE, TEAL, AMBER, CORAL, VIOLET, GREEN, SKY];
+  [ [ 3.5, -16, 0.15, 6], [ 7.0,  -9, 0.55, 5], [11.0,  -3, 0.30, 7],
+    [15.0,   4, 0.70, 5], [19.5,  11, 0.20, 6], [ 5.5,  17, 0.60, 4],
+    [13.0,  22, 0.40, 5]
+  ].forEach((cfg, i) => buildTrace(cfg[0], cfg[1], NET_HUES[i % NET_HUES.length], cfg[2], cfg[3]));
+
+  /* The shield the traces resolve into — same outline the badge extrudes, so
+     the drawn silhouette and the solid badge sit exactly on top of each other. */
+  const OUTLINE_N = 220;
+  const outlineRaw = SHIELD_OUTLINE.map(([x,y]) => new THREE.Vector3(x*1.55, y*1.55, 0));
+  outlineRaw.push(outlineRaw[0].clone());
+  const outlineGeo = new THREE.BufferGeometry().setFromPoints(resample(outlineRaw, OUTLINE_N));
+  outlineGeo.setDrawRange(0, 0);
+  const outlineMat = new THREE.LineBasicMaterial({ color:0x7FE9DC, transparent:true, opacity:1 });
+  const outlineLine = new THREE.Line(outlineGeo, outlineMat);
+  /* On the badge's front face, not its centre plane — at z=0 the outline sat
+     ~2 units behind the artwork and the perspective offset showed as a halo
+     during the cross-fade instead of the two coinciding. */
+  outlineLine.position.set(0, 9, (halfD + 0.015) * 1.55);
+  scene.add(outlineLine);
+
+  /* ---------- rocket fly-by ----------
+     Crosses left to right just as the badge finishes forming — the emblem has a
+     rocket in it, so the sequence borrows it rather than inventing a motif. */
+  const rocket = new THREE.Group();
+  const rkBody  = new THREE.MeshStandardMaterial({ color:0xF2F6FF, metalness:0.3, roughness:0.42, emissive:0x2A3A63, emissiveIntensity:0.45 });
+  const rkFin   = new THREE.MeshStandardMaterial({ color:0x3FD6C4, metalness:0.2, roughness:0.5,  emissive:0x12B9A6, emissiveIntensity:0.55 });
+  const rkFlame = new THREE.MeshBasicMaterial({ color:0xFFC94D, transparent:true, opacity:0.95 });
+
+  const rkTube = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 2.6, 14), rkBody);
+  const rkNose = new THREE.Mesh(new THREE.ConeGeometry(0.5, 1.35, 14), rkBody);
+  rkNose.position.y = 1.97;
+  const rkWin = new THREE.Mesh(new THREE.SphereGeometry(0.25, 10, 10),
+    new THREE.MeshBasicMaterial({ color:0xF2557F }));
+  rkWin.position.set(0, 0.62, 0.4);
+  const rkJet = new THREE.Mesh(new THREE.ConeGeometry(0.44, 1.6, 12), rkFlame);
+  rkJet.position.y = -2.1; rkJet.rotation.x = Math.PI;
+  rocket.add(rkTube, rkNose, rkWin, rkJet);
+  [-1, 1].forEach(s => {
+    const fin = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.95, 0.72), rkFin);
+    fin.position.set(s*0.5, -1.15, 0);
+    rocket.add(fin);
+  });
+  /* the model is built nose-up; lay it over so it flies along +x */
+  rocket.rotation.z = -Math.PI/2;
+  rocket.visible = false;
+  scene.add(rocket);
+
+  /* Where the badge settles at the end — high in frame, so the last scroll
+     reads as the banner lifting away. With the city on it is the tallest
+     rooftop instead. Guarded rather than assumed: buildingNodes is empty while
+     CITY_ENABLED is false, and buildingNodes[0].h would throw on frame one. */
+  let tallest = null;
+  buildingNodes.forEach(b => { if(!tallest || b.h > tallest.h) tallest = b; });
+  const DOCK = tallest
+    ? new THREE.Vector3(tallest.mesh.position.x, tallest.h + 6.2, tallest.mesh.position.z)
+    : new THREE.Vector3(0, 27, -6);
+  const BADGE_HOME = new THREE.Vector3(0, 9, 0);
+
+  /* ---------- choreography ----------
+     0.00–0.30  traces draw in from the left
+     0.22–0.44  shield outline draws on the right
+     0.40–0.58  solid badge cross-fades in over the outline
+     0.70–0.90  badge lifts, shrinks and docks on the rooftop
+     0.86–1.00  camera pulls back over the lit skyline                        */
+  const CAMS = [
+    { p:0.00, pos:new THREE.Vector3( 12, 14, 56), look:new THREE.Vector3(-12, 11, 0) },
+    { p:0.30, pos:new THREE.Vector3(  5, 12, 44), look:new THREE.Vector3( -3, 10, 0) },
+    { p:0.58, pos:new THREE.Vector3(  0, 11, 36), look:new THREE.Vector3(  0, 10, 0) },
+    { p:0.80, pos:new THREE.Vector3(  0, 18, 40), look:new THREE.Vector3(  0, 14, 0) },
+    { p:1.00, pos:new THREE.Vector3(  0, 22, 52), look:new THREE.Vector3(  0, 15, 0) }
+  ];
+  const _cp = new THREE.Vector3(), _cl = new THREE.Vector3();
+  function camAt(p){
+    let i = 0;
+    while(i < CAMS.length-2 && p > CAMS[i+1].p) i++;
+    const a = CAMS[i], b = CAMS[i+1];
+    const t = ease(clamp01((p - a.p) / (b.p - a.p)));
+    _cp.lerpVectors(a.pos, b.pos, t);
+    _cl.lerpVectors(a.look, b.look, t);
+  }
 
   let scrollProgress = 0;
 
@@ -1006,47 +1224,118 @@
     /* once faded, the buttons must stop swallowing clicks on the 3D stage */
     heroActions.style.pointerEvents = copyT > 0.6 ? 'none' : 'auto';
 
-    if(scrollProgress < 0.4)       stageText.textContent = 'Street view';
-    else if(scrollProgress < 0.78) stageText.textContent = 'Aerial transit';
+    if(scrollProgress < 0.24)      stageText.textContent = 'Signal incoming';
+    else if(scrollProgress < 0.46) stageText.textContent = 'Tracing the mark';
+    else if(scrollProgress < 0.74) stageText.textContent = 'Identity formed';
     else                           stageText.textContent = 'Network linked';
   }
 
   function render(){
     const p = scrollProgress;
 
-    const camPos = new THREE.Vector3(), camLook = new THREE.Vector3();
-    if(p < 0.5){
-      const t = ease(p/0.5);
-      camPos.lerpVectors(CAM_STREET.pos, CAM_MID.pos, t);
-      camLook.lerpVectors(CAM_STREET.look, CAM_MID.look, t);
-    } else {
-      const t = ease((p-0.5)/0.5);
-      camPos.lerpVectors(CAM_MID.pos, CAM_TOP.pos, t);
-      camLook.lerpVectors(CAM_MID.look, CAM_TOP.look, t);
+    camAt(p);
+    camera.position.copy(_cp);
+    camera.lookAt(_cl);
+
+    /* 0 — idle neon traces. The clock only advances while the banner is at rest,
+       so they flow on first view and freeze as soon as the reader scrolls. Time
+       is accumulated rather than read from performance.now() directly: reading
+       the wall clock would make them jump forward by however long the reader
+       spent scrolled away, instead of resuming where they stopped. */
+    const nowMs = performance.now();
+    const dt = Math.min(nowMs - idleLast, 64);   /* clamp so a stalled tab cannot lurch */
+    idleLast = nowMs;
+    const atRest = p < 0.015;
+    if(atRest) idleClock += dt;
+
+    const idleVis = 1 - clamp01(p / 0.10);       /* fade out as the sequence starts */
+    idleGroup.visible = idleVis > 0.01;
+    if(idleGroup.visible){
+      const flow = idleClock * 0.0085;
+      idleTraces.forEach(t => {
+        const travelled = (t.phase + flow) % IDLE_SPAN;
+        t.grp.position.x = IDLE_START + travelled;
+        /* fade in and out at both ends of the run so the wrap never pops */
+        const edge = Math.min(1, travelled / 10, (IDLE_SPAN - travelled) / 12);
+        t.mat.opacity = Math.max(0, edge) * 0.85 * idleVis;
+      });
     }
-    camera.position.copy(camPos);
-    camera.lookAt(camLook);
 
-    const t2 = performance.now()*0.00035;
-    logoGroup.rotation.y = 0.55 + t2*2 + p*Math.PI*3.2;
-    logoGroup.rotation.x = -0.18 + Math.sin(t2*0.6)*0.16;
-    logoGroup.rotation.z = Math.sin(t2*0.4)*0.05;
+    /* 1 — traces crawl in from the left, joints popping as the front passes */
+    const netT = clamp01(p/0.30);
+    const drawn = Math.floor(netT * NET_N);
+    traces.forEach(t => t.geo.setDrawRange(0, drawn));
+    joints.forEach(j => {
+      const pop = clamp01((netT - j.t) * 9);
+      j.mesh.scale.setScalar(0.001 + pop * 1.25);
+    });
 
-    const dockEase = ease(clamp01((p-0.7)/0.3));
-    logoGroup.scale.setScalar(lerp(1.55, 0.28, dockEase));
-    logoGroup.position.lerpVectors(new THREE.Vector3(0,9,0), new THREE.Vector3(-13,24,30), dockEase);
+    /* 2 — the shield draws itself, then hands over to the solid badge */
+    const outT = clamp01((p-0.22)/0.22);
+    outlineGeo.setDrawRange(0, Math.floor(outT * OUTLINE_N));
+    const handover = clamp01((p-0.44)/0.14);
+    outlineMat.opacity = 1 - handover;
+    outlineLine.visible = outT > 0.001 && handover < 0.999;
 
-    const logoFade = 1 - clamp01((p-0.92)/0.08);
-    faceMat.opacity = logoFade;
-    coreMat.opacity = logoFade; coreMat.transparent = true;
-    rimMat.opacity  = 0.75*logoFade;
-    logoGroup.visible = logoFade > 0.01;
+    /* the network stays lit under the badge, then dims as the city takes over */
+    const netFade = 1 - clamp01((p-0.56)/0.20);
+    traces.forEach(t => { t.mat.opacity = 0.95 * netFade; });
+    joints.forEach(j => { j.mat.opacity = netFade; });
+    netGroup.visible = netFade > 0.01;
 
-    const circuitT = clamp01((p-0.42)/0.4);
+    /* 3 — badge fades in aligned with the drawn outline, so it only starts
+       turning once the cross-fade is done and there is nothing to align to */
+    const badgeIn = clamp01((p-0.40)/0.16);
+    const spin = ease(clamp01((p-0.58)/0.42));
+    const t2 = nowMs*0.00035;
+    /* Exactly two full turns, so the badge finishes square to the camera rather
+       than stopping wherever the clock happened to leave it — it was landing
+       edge-on and reading as a sliver. The idle wobble is faded out over the
+       same window so nothing is still drifting when it settles. */
+    const wobble = 1 - ease(clamp01((p-0.70)/0.20));
+    logoGroup.rotation.y = spin * Math.PI * 4 + Math.sin(t2) * 0.16 * wobble;
+    logoGroup.rotation.x = (-0.18 + Math.sin(t2*0.6)*0.14) * spin * wobble;
+    logoGroup.rotation.z = Math.sin(t2*0.4) * 0.05 * spin * wobble;
+
+    /* 3b — the rocket crosses as the badge lands, then clears the frame */
+    const rocketT = clamp01((p - 0.46)/0.24);
+    rocket.visible = rocketT > 0.002 && rocketT < 0.998;
+    if(rocket.visible){
+      rocket.position.set(
+        lerp(-48, 48, rocketT),
+        10.5 + Math.sin(rocketT * Math.PI) * 4.5,  /* a shallow arc, not a flat run */
+        7
+      );
+      /* nose tips up on the climb and down on the descent */
+      rocket.rotation.y = 0;
+      rocket.rotation.x = 0;
+      rocket.rotation.z = -Math.PI/2 + Math.cos(rocketT * Math.PI) * 0.22;
+      rkFlame.opacity = 0.62 + Math.sin(nowMs * 0.02) * 0.33;
+    }
+
+    /* 4 — dock on the tallest rooftop */
+    const dockEase = ease(clamp01((p-0.70)/0.20));
+    logoGroup.scale.setScalar(lerp(1.55, 0.34, dockEase) * lerp(0.6, 1, badgeIn));
+    logoGroup.position.lerpVectors(BADGE_HOME, DOCK, dockEase);
+
+    faceMat.opacity = badgeIn;
+    coreMat.opacity = badgeIn; coreMat.transparent = true;
+    rimMat.opacity  = 0.75 * badgeIn;
+    logoGroup.visible = badgeIn > 0.01;
+
+    const circuitT = clamp01((p-0.60)/0.3);
     circuitMats.forEach(m => { m.opacity = circuitT*0.95; });
 
-    const emissiveT = lerp(0.4, 1.6, clamp01((p-0.4)/0.5));
-    buildingNodes.forEach(b => { b.mesh.material.emissiveIntensity = emissiveT; });
+    /* 5 — the skyline grows up alongside the incoming traces. Scaling from the
+       base (not the centre) means moving the mesh up by half of what it gains,
+       otherwise a scaled box sinks through the ground plane. */
+    const emissiveT = lerp(0.16, 0.62, clamp01((p-0.4)/0.5));
+    buildingNodes.forEach(b => {
+      const g = Math.max(0.0015, ease(clamp01((p - b.grow0) / 0.26)));
+      b.mesh.scale.y = g;
+      b.mesh.position.y = (b.h / 2) * g;
+      b.mesh.material.emissiveIntensity = emissiveT;
+    });
 
     renderer.render(scene, camera);
 

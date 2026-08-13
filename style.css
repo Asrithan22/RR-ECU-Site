@@ -20,7 +20,7 @@
   --blue-50:#EDF5FE;
 
   /* Brand — Accent */
-  --gold-700:#9C7126;
+  --gold-700:#7E5B1E;
   --gold-600:#B88C33;
   --gold-500:#D4A64A;          /* ACCENT  Gold */
   --gold-200:#F0DFB8;
@@ -34,6 +34,7 @@
      (green chess / orange awards / violet festival), so the event section
      inherits them instead of inventing a set. */
   --green-700:#0F6B3B;
+  --green-400:#6BD66C;          /* light enough to read as text on a mid-tone fill */
   --green-600:#17864B;
   --green-500:#1E9E5A;
   --green-100:#D8F2E4;
@@ -60,6 +61,31 @@
   --violet-400:#9E77E0;
   --violet-100:#E5DAF8;
   --violet-50:#F4EFFD;
+
+  /* Warm, youthful hues. The palette above is cool end to end — blue, cyan,
+     violet, green — which is what made the page read corporate rather than
+     family-friendly. Coral and amber are the counterweight; teal bridges the
+     two halves so the warm additions don't sit apart from the logo colours. */
+  --coral-700:#B32A52;
+  --coral-600:#DB3A69;
+  --coral-500:#F2557F;
+  --coral-400:#FF7DA0;
+  --coral-100:#FFD9E3;
+  --coral-50:#FFF0F4;
+
+  --amber-700:#8A5804;
+  --amber-600:#D18C0C;
+  --amber-500:#F5B324;
+  --amber-400:#FFC94D;
+  --amber-100:#FDECC4;
+  --amber-50:#FFF8E8;
+
+  --teal-700:#0A7A6C;
+  --teal-600:#0E9B89;
+  --teal-500:#12B9A6;
+  --teal-400:#3FD6C4;
+  --teal-100:#CCF2ED;
+  --teal-50:#E9FBF8;
 
   /* Light surfaces */
   --white:#FFFFFF;
@@ -121,10 +147,10 @@ a{ color:inherit; text-decoration:none; }
    not only in numbers. Every hue is one of the logo's own. --sec is the bright
    fill (rules, chips, bars); --sec-ink is the text-safe darkening of it. */
 #vision   { --sec:var(--blue-500);   --sec-ink:var(--blue-700); }
-#ecosystem{ --sec:var(--cyan-500);   --sec-ink:var(--cyan-800); }
-#focus    { --sec:var(--gold-500);   --sec-ink:var(--gold-700); }
+#ecosystem{ --sec:var(--coral-500);  --sec-ink:var(--coral-700); }
+#focus    { --sec:var(--amber-500);  --sec-ink:var(--amber-700); }
 #whatwedo { --sec:var(--violet-500); --sec-ink:var(--violet-700); }
-#festival { --sec:var(--green-500);  --sec-ink:var(--green-700); }
+#festival { --sec:var(--teal-500);   --sec-ink:var(--teal-700); }
 #cta      { --sec:var(--gold-500);   --sec-ink:var(--gold-700); }
 
 .eyebrow{
@@ -143,6 +169,10 @@ a{ color:inherit; text-decoration:none; }
 /* navy sections keep bright ink regardless of their accent */
 .on-navy .eyebrow{ color:var(--blue-400); }
 .on-navy .eyebrow .idx{ color:var(--gold-500); }
+/* The vivid CTA is a mid-tone gradient, not deep navy — blue-400 lands at
+   3.20:1 on it and gold-500 at 3.58:1, both under AA at 12px. */
+.surface-vivid .eyebrow{ color:#fff; }
+.surface-vivid .eyebrow .idx{ color:var(--amber-400); }
 
 .section-title{
   font-family:var(--font-display); font-weight:800;
@@ -164,6 +194,30 @@ a{ color:inherit; text-decoration:none; }
 .wrap{ max-width:var(--maxw); margin-inline:auto; }
 .surface-white{ background:var(--white); }
 .surface-grey{ background:var(--grey-50); }
+
+/* Light, tinted surfaces carry the rhythm now. The page used to alternate
+   white and deep navy, which made navy the dominant impression; these keep the
+   alternation legible while staying bright and warm. */
+.surface-mint{
+  background:
+    radial-gradient(780px 420px at 88% 0%, var(--teal-50), transparent 66%),
+    radial-gradient(680px 400px at 4% 96%, var(--amber-50), transparent 64%),
+    #F4FBFA;
+}
+.surface-peach{
+  background:
+    radial-gradient(760px 420px at 6% 0%, var(--coral-50), transparent 66%),
+    radial-gradient(700px 400px at 94% 92%, var(--amber-50), transparent 64%),
+    #FFF9F6;
+}
+/* The one saturated block on the page — an end note, not a background. */
+.surface-vivid{
+  background:
+    radial-gradient(760px 520px at 12% 8%, rgba(242,85,127,.55), transparent 62%),
+    radial-gradient(680px 480px at 88% 12%, rgba(245,179,36,.42), transparent 60%),
+    radial-gradient(720px 520px at 70% 96%, rgba(18,185,166,.45), transparent 62%),
+    linear-gradient(140deg, var(--violet-600), var(--blue-700) 58%, var(--violet-700));
+}
 .surface-navy{
   background:
     radial-gradient(1100px 600px at 82% -8%, rgba(35,135,232,.20), transparent 62%),
@@ -231,7 +285,7 @@ a{ color:inherit; text-decoration:none; }
 
 .nav-cta{
   margin-left:10px; padding:11px 22px !important; border-radius:999px !important;
-  background:var(--blue-500); color:#fff !important; font-weight:700 !important;
+  background:var(--blue-600); color:#fff !important; font-weight:700 !important;
   box-shadow:var(--sh-blue);
   transition:transform .2s ease, background .2s ease, box-shadow .2s ease !important;
 }
@@ -275,7 +329,7 @@ a{ color:inherit; text-decoration:none; }
 @media(max-width:400px){ .nb-text{ display:none; } }
 
 /* ---------- 6. HERO ---------- */
-#hero-wrapper{ position:relative; height:300vh; background:var(--navy-800); }
+#hero-wrapper{ position:relative; height:300vh; background:#221C4A; }
 #hero-stage{ position:sticky; top:0; height:100vh; overflow:hidden; }
 #hero-canvas,#glow-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; z-index:1; }
 #glow-canvas{ mix-blend-mode:screen; pointer-events:none; }
@@ -300,13 +354,14 @@ a{ color:inherit; text-decoration:none; }
   position:absolute; border-radius:50%;
   filter:blur(95px); will-change:transform, opacity;
 }
+
 /* Alphas tuned by measuring the composited pixel, not by eye: .30 here read as
    a vivid 21/102/216 at the corner once screen blending was in play. */
-#hero-bg .b1{ width:44vw; height:44vw; left:-12vw; top:-10vw;   background:rgba(35,135,232,.10); animation:hb-a 19s ease-in-out infinite; }
-#hero-bg .b2{ width:38vw; height:38vw; right:-10vw; top:0;      background:rgba(34,182,217,.075); animation:hb-b 23s ease-in-out infinite; }
-#hero-bg .b3{ width:34vw; height:34vw; left:20vw;  bottom:-16vw; background:rgba(212,166,74,.06); animation:hb-c 27s ease-in-out infinite; }
-#hero-bg .b4{ width:30vw; height:30vw; right:12vw; bottom:-14vw; background:rgba(124,77,204,.085); animation:hb-d 21s ease-in-out infinite; }
-#hero-bg .b5{ width:26vw; height:26vw; left:42vw;  top:26vh;     background:rgba(30,158,90,.045); animation:hb-e 25s ease-in-out infinite; }
+#hero-bg .b1{ width:44vw; height:44vw; left:-12vw; top:-10vw;   background:rgba(124,77,204,.16); animation:hb-a 19s ease-in-out infinite; }
+#hero-bg .b2{ width:38vw; height:38vw; right:-10vw; top:0;      background:rgba(18,185,166,.13); animation:hb-b 23s ease-in-out infinite; }
+#hero-bg .b3{ width:34vw; height:34vw; left:20vw;  bottom:-16vw; background:rgba(245,179,36,.10); animation:hb-c 27s ease-in-out infinite; }
+#hero-bg .b4{ width:30vw; height:30vw; right:12vw; bottom:-14vw; background:rgba(242,85,127,.15); animation:hb-d 21s ease-in-out infinite; }
+#hero-bg .b5{ width:26vw; height:26vw; left:42vw;  top:26vh;     background:rgba(35,135,232,.09); animation:hb-e 25s ease-in-out infinite; }
 
 /* Each returns to its opening frame, so collapsing the duration under
    reduced motion settles on a composed still rather than a half-drifted one. */
@@ -396,9 +451,10 @@ a{ color:inherit; text-decoration:none; }
 #hero-wrapper.no3d{
   height:auto; min-height:100svh;
   background:
-    radial-gradient(900px 520px at 70% 12%, rgba(35,135,232,.30), transparent 62%),
-    radial-gradient(700px 460px at 10% 92%, rgba(212,166,74,.16), transparent 62%),
-    var(--navy-800);
+    radial-gradient(900px 520px at 70% 12%, rgba(18,185,166,.34), transparent 62%),
+    radial-gradient(760px 480px at 12% 88%, rgba(242,85,127,.30), transparent 62%),
+    radial-gradient(620px 420px at 88% 96%, rgba(245,179,36,.22), transparent 60%),
+    linear-gradient(150deg, var(--violet-600), var(--blue-700) 60%, var(--violet-700));
 }
 #hero-wrapper.no3d #hero-stage{ position:relative; height:auto; min-height:100svh; }
 #hero-wrapper.no3d #hero-canvas,
@@ -448,8 +504,13 @@ a{ color:inherit; text-decoration:none; }
 .vm-card::before{
   content:''; position:absolute; top:0; left:34px; right:34px; height:3px; border-radius:0 0 3px 3px;
 }
+/* The first coloured block a visitor meets. It was three navy stops, which set
+   the tone for everything after it; now it carries the brand gradient instead. */
 #vision-card{
-  background:linear-gradient(160deg, var(--navy-800) 0%, var(--navy-700) 60%, var(--navy-600) 100%);
+  background:
+    radial-gradient(520px 380px at 90% 4%, rgba(18,185,166,.42), transparent 62%),
+    radial-gradient(460px 340px at 4% 96%, rgba(242,85,127,.34), transparent 60%),
+    linear-gradient(155deg, var(--violet-600) 0%, var(--blue-700) 62%, var(--violet-700) 100%);
   border-color:transparent; color:var(--on-dark);
   box-shadow:var(--sh-lg);
 }
@@ -460,7 +521,9 @@ a{ color:inherit; text-decoration:none; }
   display:inline-block; padding:6px 14px; border-radius:999px;
   font-size:11px; font-weight:800; letter-spacing:.18em; text-transform:uppercase;
 }
-#vision-card .vm-tag{ background:rgba(212,166,74,.18); color:var(--gold-500); }
+/* The card behind this went from navy to violet, which dropped the old gold-on
+   -gold-tint chip to 3.58:1. Darkened well and lightened ink: 7.2:1. */
+#vision-card .vm-tag{ background:rgba(4,16,31,.30); color:var(--amber-400); }
 #mission-card .vm-tag{ background:var(--blue-50); color:var(--blue-700); }
 
 .vm-quote{
@@ -508,8 +571,8 @@ a{ color:inherit; text-decoration:none; }
 .pillar-card:hover{ transform:translateY(-8px); box-shadow:var(--sh-lg); border-color:transparent; }
 .pillar-card:hover::before{ transform:scaleX(1); }
 .pillar-governance{ --pc:var(--blue-500); }
-.pillar-culture{ --pc:var(--gold-500); }
-.pillar-growth{ --pc:var(--green-500); }
+.pillar-culture{ --pc:var(--coral-500); }
+.pillar-growth{ --pc:var(--teal-500); }
 
 .pc-badge{
   width:52px; height:52px; border-radius:15px; display:grid; place-items:center;
@@ -544,55 +607,61 @@ a{ color:inherit; text-decoration:none; }
 .partner-note p{ font-size:16px; line-height:1.72; color:var(--ink-700); }
 .partner-note b{ color:var(--ink-900); font-weight:700; }
 
-/* ---------- 10. FOCUS AREAS (navy) ---------- */
+/* ---------- 10. FOCUS AREAS (mint) ---------- */
 .focus-board{ margin-top:60px; position:relative; }
 .focus-board::before{
   content:''; position:absolute; left:31px; top:26px; bottom:26px; width:2px; border-radius:2px;
   /* stops track the five focus-row accents below, in order */
-  background:linear-gradient(180deg, var(--blue-500), var(--cyan-400) 26%, var(--gold-500) 52%, var(--green-500) 76%, var(--violet-400));
-  opacity:.55;
+  background:linear-gradient(180deg, var(--blue-500), var(--teal-500) 26%, var(--amber-500) 52%, var(--coral-500) 76%, var(--violet-500));
+  opacity:.9;
 }
 @media(max-width:700px){ .focus-board::before{ left:23px; } }
 
 .focus-row{
   position:relative; display:grid; grid-template-columns:64px 1fr; gap:28px;
   padding:26px 0;
-  border-bottom:1px solid rgba(143,180,220,.20);
+  border-bottom:1px solid rgba(7,27,51,.09);
 }
 .focus-row:last-child{ border-bottom:0; }
 @media(max-width:700px){ .focus-row{ grid-template-columns:48px 1fr; gap:18px; } }
 
+/* The badge is now the accent itself rather than navy outlined in the accent —
+   five saturated chips down the page instead of five dark ones. The ring punches
+   the badge through the rail behind it, so it tracks the surface, not navy. */
 .focus-num{
   position:relative; z-index:2;
   width:64px; height:64px; border-radius:19px; display:grid; place-items:center;
   font-family:var(--font-display); font-size:17px; font-weight:800; font-variant-numeric:tabular-nums;
-  color:#fff; background:var(--navy-700);
-  border:2px solid var(--fc); box-shadow:0 0 0 6px rgba(7,27,51,1), 0 10px 26px rgba(0,0,0,.3);
-  transition:transform .35s cubic-bezier(.16,1,.3,1), background .35s ease, color .35s ease;
+  color:var(--fc-ink, #fff); background:var(--fc);
+  box-shadow:0 0 0 7px #F4FBFA, 0 10px 24px var(--fc-shadow, rgba(7,27,51,.22));
+  transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease;
 }
 @media(max-width:700px){ .focus-num{ width:48px; height:48px; border-radius:15px; font-size:14px; } }
-.focus-row:hover .focus-num{ transform:scale(1.08); background:var(--fc); color:var(--navy-900); }
-.focus-row[data-c="blue"]{ --fc:var(--blue-500); }
-.focus-row[data-c="sky"]{ --fc:var(--blue-400); }
-.focus-row[data-c="cyan"]{ --fc:var(--cyan-400); }
-.focus-row[data-c="gold"]{ --fc:var(--gold-500); }
-.focus-row[data-c="green"]{ --fc:var(--green-500); }
-.focus-row[data-c="violet"]{ --fc:var(--violet-400); }
-.focus-row[data-c="orange"]{ --fc:var(--orange-500); }
+.focus-row:hover .focus-num{ transform:scale(1.1) rotate(-4deg); }
+/* Fill and ink are chosen together, per row, and measured. White on a mid-tone
+   accent fails badly — teal-600 gave 3.46:1, amber-600 2.81:1, coral-500 3.29:1
+   — so the light fills carry navy ink and only the deep fills carry white. */
+.focus-row[data-c="blue"]  { --fc:var(--blue-700);   --fc-shadow:rgba(14,92,174,.38); }
+.focus-row[data-c="sky"]   { --fc:var(--blue-600);   --fc-shadow:rgba(21,113,206,.38); }
+.focus-row[data-c="cyan"]  { --fc:var(--teal-700);   --fc-shadow:rgba(10,122,108,.38); }
+.focus-row[data-c="gold"]  { --fc:var(--amber-500);  --fc-ink:var(--navy-900); --fc-shadow:rgba(245,179,36,.42); }
+.focus-row[data-c="green"] { --fc:var(--coral-700);  --fc-shadow:rgba(179,42,82,.38); }
+.focus-row[data-c="violet"]{ --fc:var(--violet-600); --fc-shadow:rgba(96,57,163,.38); }
+.focus-row[data-c="orange"]{ --fc:var(--orange-700); --fc-shadow:rgba(169,76,21,.38); }
 
 .focus-content h4{
   font-family:var(--font-display); font-size:clamp(20px,2.2vw,26px); font-weight:800;
-  letter-spacing:-.02em; color:#fff; padding-top:12px;
+  letter-spacing:-.02em; color:var(--ink-900); padding-top:12px;
 }
 .focus-tags{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
 .focus-tags span{
   padding:8px 15px; border-radius:999px;
-  background:rgba(255,255,255,.07); border:1px solid rgba(143,180,220,.26);
-  font-size:14px; font-weight:500; color:var(--on-dark-2);
+  background:var(--white); border:1px solid rgba(7,27,51,.12);
+  font-size:14px; font-weight:600; color:var(--ink-700);
   transition:background .25s ease, border-color .25s ease, color .25s ease, transform .25s ease;
 }
-.focus-row:hover .focus-tags span{ border-color:var(--fc); color:#fff; }
-.focus-tags span:hover{ background:var(--fc); color:var(--navy-900); font-weight:600; transform:translateY(-2px); }
+.focus-row:hover .focus-tags span{ border-color:var(--fc); }
+.focus-tags span:hover{ background:var(--fc); color:#fff; transform:translateY(-2px); }
 
 /* ---------- 11. WHAT WE DO ---------- */
 /* --- slider --- */
@@ -700,17 +769,19 @@ a{ color:inherit; text-decoration:none; }
 }
 .do-body p{ margin-top:9px; font-size:15px; line-height:1.66; color:var(--ink-700); }
 
-.do-card:nth-child(1){ --dc:var(--gold-500); }
-.do-card:nth-child(2){ --dc:var(--green-500); }
+.do-card:nth-child(1){ --dc:var(--amber-500); }
+.do-card:nth-child(2){ --dc:var(--teal-500); }
 .do-card:nth-child(3){ --dc:var(--blue-500); }
-.do-card:nth-child(4){ --dc:var(--cyan-500); }
+.do-card:nth-child(4){ --dc:var(--coral-500); }
 .do-card:nth-child(5){ --dc:var(--violet-500); }
-.do-card:nth-child(6){ --dc:var(--orange-500); }
+.do-card:nth-child(6){ --dc:var(--green-500); }
 
 /* Promise strip */
 .promise-row{
   margin-top:56px; padding:26px 30px; border-radius:var(--r-lg);
-  background:var(--navy-800);
+  /* teal-600 put white at 3.47:1 — fine for the 19px bold end of the clamp,
+     under AA at the 15px end. teal-700 takes it to 5.2:1 across the range. */
+  background:linear-gradient(100deg, var(--violet-600), var(--blue-600) 46%, var(--teal-700));
   display:flex; flex-wrap:wrap; gap:14px 0; justify-content:center; align-items:center;
 }
 .promise-row span{
@@ -739,18 +810,18 @@ a{ color:inherit; text-decoration:none; }
 @media(max-width:760px){ .stats-strip{ grid-template-columns:1fr; } }
 .stat{
   padding:36px 26px; border-radius:var(--r-lg); text-align:center;
-  background:var(--blue-50); border:1px solid var(--blue-100);
+  background:var(--coral-50); border:1px solid var(--coral-100);
   transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease;
 }
 .stat:hover{ transform:translateY(-5px); box-shadow:var(--sh-md); }
-.stat:nth-child(2){ background:var(--gold-50); border-color:var(--gold-200); }
-.stat:nth-child(3){ background:var(--cyan-50); border-color:var(--cyan-100); }
+.stat:nth-child(2){ background:var(--amber-50); border-color:var(--amber-100); }
+.stat:nth-child(3){ background:var(--teal-50); border-color:var(--teal-100); }
 .stat .num{
   font-family:var(--font-display); font-weight:800; font-variant-numeric:tabular-nums;
-  font-size:clamp(38px,5vw,54px); line-height:1; letter-spacing:-.03em; color:var(--blue-700);
+  font-size:clamp(38px,5vw,54px); line-height:1; letter-spacing:-.03em; color:var(--coral-700);
 }
-.stat:nth-child(2) .num{ color:var(--gold-700); }
-.stat:nth-child(3) .num{ color:var(--cyan-800); }
+.stat:nth-child(2) .num{ color:var(--amber-700); }
+.stat:nth-child(3) .num{ color:var(--teal-700); }
 .stat .lbl{
   margin-top:10px; font-size:12.5px; font-weight:700; letter-spacing:.15em; text-transform:uppercase;
   color:var(--ink-700);
@@ -852,9 +923,9 @@ a{ color:inherit; text-decoration:none; }
 .funzone{
   margin-top:22px; padding:32px 30px; border-radius:var(--r-lg);
   background:
-    radial-gradient(600px 300px at 88% 0%, rgba(124,77,204,.42), transparent 64%),
-    radial-gradient(520px 280px at 4% 100%, rgba(34,182,217,.30), transparent 62%),
-    var(--navy-800);
+    radial-gradient(600px 300px at 88% 0%, rgba(242,85,127,.45), transparent 64%),
+    radial-gradient(520px 280px at 4% 100%, rgba(18,185,166,.42), transparent 62%),
+    linear-gradient(120deg, var(--violet-600), var(--violet-700) 60%, var(--blue-700));
   display:flex; align-items:center; justify-content:space-between; gap:26px; flex-wrap:wrap;
 }
 .fz-head h3{
@@ -871,7 +942,7 @@ a{ color:inherit; text-decoration:none; }
 }
 .fzc-1{ background:var(--gold-500); }
 .fzc-2{ background:var(--cyan-400); }
-.fzc-3{ background:#6BD66C; }
+.fzc-3{ background:var(--green-400); }
 .fzc-4{ background:var(--orange-500); }
 .fzc-5{ background:var(--violet-400); }
 
@@ -933,17 +1004,29 @@ a{ color:inherit; text-decoration:none; }
 .cta-buttons{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:38px; }
 .cta-slogan{
   margin-top:44px; font-family:var(--font-display); font-weight:800;
-  font-size:clamp(18px,2.2vw,26px); letter-spacing:-.02em; color:var(--gold-500);
+  font-size:clamp(18px,2.2vw,26px); letter-spacing:-.02em; color:var(--amber-400);
 }
 .cta-tag{
   margin-top:12px; font-size:12.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
   color:var(--on-dark-2);
 }
 
+/* Deep enough to close the page, but tinted violet-to-teal rather than flat
+   navy-900, and topped with the full accent set so the last thing on screen
+   still carries colour. */
 footer{
-  background:var(--navy-900); color:var(--on-dark-2);
+  position:relative;
+  background:
+    radial-gradient(700px 380px at 10% 0%, rgba(124,77,204,.34), transparent 62%),
+    radial-gradient(620px 340px at 92% 10%, rgba(18,185,166,.26), transparent 60%),
+    var(--violet-800);
+  color:var(--on-dark-2);
   padding:52px var(--gutter) 34px;
-  border-top:1px solid rgba(143,180,220,.16);
+}
+footer::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:4px;
+  background:linear-gradient(90deg,
+    var(--blue-500), var(--teal-500) 25%, var(--amber-500) 50%, var(--coral-500) 75%, var(--violet-400));
 }
 .foot-top{
   max-width:var(--maxw); margin-inline:auto;
