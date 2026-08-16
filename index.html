@@ -72,7 +72,7 @@
 
       <div class="hero-actions">
         <a href="#cta" class="btn btn-gold">Join Our Community <span class="arw">&rarr;</span></a>
-        <a href="#vision" class="btn btn-outline-light">Explore Our Vision</a>
+        <a href="#vision" class="btn btn-outline-dark">Explore Our Vision</a>
       </div>
 
       <div class="hero-scrollcue"><span>Scroll to connect</span><span class="line"></span></div>
@@ -689,6 +689,58 @@
 
 
 /* ============================================================
+   1a. FLOATING SHAPES — decorative pastel shapes drifting behind
+   each light section. Injected rather than authored into the
+   markup: it is pure decoration, and 60-odd empty <i> elements
+   in the HTML would bury the actual content.
+   ============================================================ */
+(function(){
+  /* Skipped wholesale under reduced motion. The CSS kill-switch would freeze
+     these anyway, but then they are just static confetti nobody asked for. */
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const HUES = ['#FF7DA0','#FFC94D','#3FD6C4','#9E77E0','#5AA9F0','#6BD66C'];
+  const SHAPES = ['', 'ring', 'kite', '', 'ring', 'kite', ''];
+
+  /* The vivid CTA is already saturated and the festival section is busy —
+     shapes there would be noise, so only the calmer light surfaces get them. */
+  document.querySelectorAll('#vision, #ecosystem, #focus, #whatwedo').forEach((sec, si) => {
+    const layer = document.createElement('div');
+    layer.className = 'floaties';
+    layer.setAttribute('aria-hidden', 'true');
+
+    for(let i=0;i<9;i++){
+      const el = document.createElement('i');
+      const hue = HUES[(i + si*2) % HUES.length];
+      const shape = SHAPES[(i + si) % SHAPES.length];
+      if(shape) el.className = shape;
+
+      const size = 26 + ((i*37 + si*13) % 78);          /* 26-104px */
+      el.style.setProperty('--c', hue);
+      el.style.width  = size + 'px';
+      el.style.height = size + 'px';
+      el.style.background = hue;
+      el.style.setProperty('--w', Math.max(5, Math.round(size/9)) + 'px');
+      /* A shape behind a card is invisible — the cards are opaque — so the only
+         region that actually matters is the section's own eyebrow, title and
+         lede, which sit on the bare background at the top left. Keep out of
+         that corner and the rest of the section is fair game. */
+      const left = (i % 2 === 0) ? (1 + (i*7 + si*5) % 24) : (72 + (i*5 + si*3) % 25);
+      let top = 4 + (i*11 + si*17) % 84;
+      if(left < 58 && top < 34) top += 40;
+      el.style.left = left + '%';
+      el.style.top  = top + '%';
+      el.style.opacity = (0.16 + ((i*13 + si*7) % 16)/100).toFixed(2);
+      el.style.setProperty('--dur', (16 + (i*3 + si*2) % 16) + 's');
+      el.style.setProperty('--delay', '-' + ((i*4 + si*3) % 18) + 's');
+      layer.appendChild(el);
+    }
+    sec.insertBefore(layer, sec.firstChild);
+  });
+})();
+
+
+/* ============================================================
    1b. BACK TO TOP — appears once the reader is a screen down;
    clicking launches the rocket and returns to the top.
    ============================================================ */
@@ -775,10 +827,12 @@
   const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(W, H);
-  renderer.setClearColor(0x000000, 0);
+  /* Opaque and light. The canvas composites opaque regardless of the alpha we
+     ask for, so a transparent clear just left a dark plate over the sky. */
+  renderer.setClearColor(0xEAF7FF, 1);
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x2A2456, 0.013);
+  scene.fog = new THREE.FogExp2(0xEAF7FF, 0.011);   /* fade into the sky, not into night */
   const camera = new THREE.PerspectiveCamera(45, W/H, 0.1, 500);
 
   const gctx = glowCanvas.getContext('2d');
@@ -794,22 +848,22 @@
      Warmer and brighter than the original navy-only rig. The ambient was a dark
      slate that left every surface reading as navy no matter what colour it was;
      coral and teal rim lights now push warm and cool from opposite sides. */
-  scene.add(new THREE.AmbientLight(0x49557C, 0.95));
-  const dirLight = new THREE.DirectionalLight(0xFFF3E4, 0.7);
+  scene.add(new THREE.AmbientLight(0xFFFFFF, 1.15));
+  const dirLight = new THREE.DirectionalLight(0xFFFFFF, 0.85);
   dirLight.position.set(30, 60, 20);
   scene.add(dirLight);
-  const rimBlue = new THREE.PointLight(TEAL, 3.2, 240);
+  const rimBlue = new THREE.PointLight(TEAL, 1.7, 240);
   rimBlue.position.set(-40, 30, 40);
   scene.add(rimBlue);
-  const rimGold = new THREE.PointLight(CORAL, 2.8, 240);
+  const rimGold = new THREE.PointLight(CORAL, 1.5, 240);
   rimGold.position.set(40, 26, -30);
   scene.add(rimGold);
-  const rimWarm = new THREE.PointLight(AMBER, 2.0, 200);
+  const rimWarm = new THREE.PointLight(AMBER, 1.1, 200);
   rimWarm.position.set(0, 50, -60);
   scene.add(rimWarm);
 
   /* ---------- ground grid ---------- */
-  const grid = new THREE.GridHelper(260, 60, 0x3C7FA8, 0x2E3A6B);
+  const grid = new THREE.GridHelper(260, 60, 0x9CC6E8, 0xC7DDF0);
   grid.position.y = -0.05;
   scene.add(grid);
 
@@ -1028,7 +1082,7 @@
   const IDLE_START = -52;        /* off-screen left */
   const IDLE_SPAN  = 104;        /* horizontal travel before wrapping */
   const idleTraces = [];
-  const IDLE_HUES = [0x4FC3FF, 0x2E7BFF, 0x7FE9DC, 0x3FA9F5, 0x9E77E0];
+  const IDLE_HUES = [0x1571CE, 0x7C4DCC, 0xF2557F, 0x0E9B89, 0xD18C0C];
 
   function idleTraceGeo(bend, len){
     /* a run to the right, a filleted right-angle jog, then a run on again —
@@ -1040,15 +1094,15 @@
       new THREE.Vector3(len, bend, 0)
     ];
     return new THREE.TubeGeometry(
-      new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.04), 30, 0.17, 6, false);
+      new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.04), 30, 0.11, 6, false);
   }
 
-  const dotGeo = new THREE.SphereGeometry(0.42, 10, 10);
-  for(let i=0;i<16;i++){
+  const dotGeo = new THREE.SphereGeometry(0.30, 10, 10);
+  for(let i=0;i<11;i++){
     const hue = IDLE_HUES[i % IDLE_HUES.length];
-    const len = 15 + (i % 5) * 7;
+    const len = 11 + (i % 5) * 5;
     const bend = ((i % 2) ? 1 : -1) * (1.4 + (i % 3) * 1.3);
-    const mat = new THREE.MeshBasicMaterial({ color:hue, transparent:true, opacity:0.85 });
+    const mat = new THREE.MeshBasicMaterial({ color:hue, transparent:true, opacity:0.55 });
     const grp = new THREE.Group();
     grp.add(new THREE.Mesh(idleTraceGeo(bend, len), mat));
     const dot = new THREE.Mesh(dotGeo, mat);
@@ -1130,7 +1184,7 @@
     });
   }
 
-  const NET_HUES = [BLUE, TEAL, AMBER, CORAL, VIOLET, GREEN, SKY];
+  const NET_HUES = [BLUE, TEAL, AMBER, CORAL, VIOLET, GREEN, 0x6039A3];
   [ [ 3.5, -16, 0.15, 6], [ 7.0,  -9, 0.55, 5], [11.0,  -3, 0.30, 7],
     [15.0,   4, 0.70, 5], [19.5,  11, 0.20, 6], [ 5.5,  17, 0.60, 4],
     [13.0,  22, 0.40, 5]
@@ -1143,7 +1197,7 @@
   outlineRaw.push(outlineRaw[0].clone());
   const outlineGeo = new THREE.BufferGeometry().setFromPoints(resample(outlineRaw, OUTLINE_N));
   outlineGeo.setDrawRange(0, 0);
-  const outlineMat = new THREE.LineBasicMaterial({ color:0x7FE9DC, transparent:true, opacity:1 });
+  const outlineMat = new THREE.LineBasicMaterial({ color:0x6039A3, transparent:true, opacity:1 });
   const outlineLine = new THREE.Line(outlineGeo, outlineMat);
   /* On the badge's front face, not its centre plane — at z=0 the outline sat
      ~2 units behind the artwork and the perspective offset showed as a halo
@@ -1257,7 +1311,7 @@
         t.grp.position.x = IDLE_START + travelled;
         /* fade in and out at both ends of the run so the wrap never pops */
         const edge = Math.min(1, travelled / 10, (IDLE_SPAN - travelled) / 12);
-        t.mat.opacity = Math.max(0, edge) * 0.85 * idleVis;
+        t.mat.opacity = Math.max(0, edge) * 0.5 * idleVis;
       });
     }
 
