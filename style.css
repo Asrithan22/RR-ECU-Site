@@ -328,7 +328,13 @@ a{ color:inherit; text-decoration:none; }
 @media(max-width:400px){ .nb-text{ display:none; } }
 
 /* ---------- 6. HERO ---------- */
-#hero-wrapper{ position:relative; height:300vh; background:#221C4A; }
+/* A bright sky. The 3D canvas paints over this once it is up, but the wrapper
+   still shows during load — and it is the whole background in the no3d
+   fallback below. */
+#hero-wrapper{
+  position:relative; height:300vh;
+  background:linear-gradient(180deg, #DFF1FF 0%, #EAF7FF 42%, #FFF6EC 100%);
+}
 #hero-stage{ position:sticky; top:0; height:100vh; overflow:hidden; }
 #hero-canvas,#glow-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; z-index:1; }
 #glow-canvas{ mix-blend-mode:screen; pointer-events:none; }
@@ -345,9 +351,11 @@ a{ color:inherit; text-decoration:none; }
    reason — a dark vignette is a no-op under screen. */
 #hero-bg{
   position:absolute; inset:0; z-index:2; overflow:hidden; pointer-events:none;
-  mix-blend-mode:screen;
-  mask-image:radial-gradient(124% 106% at 50% 44%, #000 40%, transparent 100%);
-  -webkit-mask-image:radial-gradient(124% 106% at 50% 44%, #000 40%, transparent 100%);
+  /* multiply, not screen. Screen adds light, so against a light sky every blob
+     washed out to nothing and the field was invisible. */
+  mix-blend-mode:multiply;
+  mask-image:radial-gradient(128% 110% at 50% 44%, #000 46%, transparent 100%);
+  -webkit-mask-image:radial-gradient(128% 110% at 50% 44%, #000 46%, transparent 100%);
 }
 #hero-bg .hb{
   position:absolute; border-radius:50%;
@@ -356,11 +364,11 @@ a{ color:inherit; text-decoration:none; }
 
 /* Alphas tuned by measuring the composited pixel, not by eye: .30 here read as
    a vivid 21/102/216 at the corner once screen blending was in play. */
-#hero-bg .b1{ width:44vw; height:44vw; left:-12vw; top:-10vw;   background:rgba(124,77,204,.16); animation:hb-a 19s ease-in-out infinite; }
-#hero-bg .b2{ width:38vw; height:38vw; right:-10vw; top:0;      background:rgba(18,185,166,.13); animation:hb-b 23s ease-in-out infinite; }
-#hero-bg .b3{ width:34vw; height:34vw; left:20vw;  bottom:-16vw; background:rgba(245,179,36,.10); animation:hb-c 27s ease-in-out infinite; }
-#hero-bg .b4{ width:30vw; height:30vw; right:12vw; bottom:-14vw; background:rgba(242,85,127,.15); animation:hb-d 21s ease-in-out infinite; }
-#hero-bg .b5{ width:26vw; height:26vw; left:42vw;  top:26vh;     background:rgba(35,135,232,.09); animation:hb-e 25s ease-in-out infinite; }
+#hero-bg .b1{ width:44vw; height:44vw; left:-12vw; top:-10vw;   background:rgba(158,119,224,.26); animation:hb-a 19s ease-in-out infinite; }
+#hero-bg .b2{ width:38vw; height:38vw; right:-10vw; top:0;      background:rgba(63,214,196,.30); animation:hb-b 23s ease-in-out infinite; }
+#hero-bg .b3{ width:34vw; height:34vw; left:20vw;  bottom:-16vw; background:rgba(255,201,77,.30); animation:hb-c 27s ease-in-out infinite; }
+#hero-bg .b4{ width:30vw; height:30vw; right:12vw; bottom:-14vw; background:rgba(255,125,160,.28); animation:hb-d 21s ease-in-out infinite; }
+#hero-bg .b5{ width:26vw; height:26vw; left:42vw;  top:26vh;     background:rgba(90,169,240,.22); animation:hb-e 25s ease-in-out infinite; }
 
 /* Each returns to its opening frame, so collapsing the duration under
    reduced motion settles on a composed still rather than a half-drifted one. */
@@ -388,7 +396,7 @@ a{ color:inherit; text-decoration:none; }
 /* readability scrim so hero copy never sits on raw 3D */
 #hero-stage::after{
   content:''; position:absolute; inset:0; pointer-events:none;
-  background:linear-gradient(180deg, rgba(7,27,51,.55) 0%, rgba(7,27,51,0) 26%, rgba(7,27,51,0) 46%, rgba(7,27,51,.86) 88%);
+  background:linear-gradient(180deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,0) 24%, rgba(255,255,255,0) 46%, rgba(255,250,242,.9) 90%);
 }
 
 #hero-copy{
@@ -448,13 +456,16 @@ a{ color:inherit; text-decoration:none; }
 @media(max-width:820px){ #hero-stage-label{ display:none; } }
 
 /* Static hero fallback — mobile / reduced-motion / no WebGL */
+/* Every phone lands here — anything at or under 820px skips the 3D — so this
+   has to be as light as the desktop sky, not the dark gradient it used to be.
+   The hero copy is dark ink now and was unreadable on the old fill. */
 #hero-wrapper.no3d{
   height:auto; min-height:100svh;
   background:
-    radial-gradient(900px 520px at 70% 12%, rgba(18,185,166,.34), transparent 62%),
-    radial-gradient(760px 480px at 12% 88%, rgba(242,85,127,.30), transparent 62%),
-    radial-gradient(620px 420px at 88% 96%, rgba(245,179,36,.22), transparent 60%),
-    linear-gradient(150deg, var(--violet-600), var(--blue-700) 60%, var(--violet-700));
+    radial-gradient(760px 480px at 72% 10%, rgba(63,214,196,.34), transparent 62%),
+    radial-gradient(700px 460px at 10% 86%, rgba(255,125,160,.30), transparent 62%),
+    radial-gradient(560px 400px at 90% 96%, rgba(255,201,77,.34), transparent 60%),
+    linear-gradient(170deg, #E4F4FF 0%, #EFF8FF 46%, #FFF4EA 100%);
 }
 #hero-wrapper.no3d #hero-stage{ position:relative; height:auto; min-height:100svh; }
 #hero-wrapper.no3d #hero-canvas,
