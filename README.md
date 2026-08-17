@@ -79,6 +79,27 @@ Four rules the design depends on:
 
 ## Changing the logo
 
+**If you have the real artwork on a flat background** — which is the usual case,
+since exported artwork nearly always sits on a solid colour. Save it into the
+project as `logo-raw.png`, then:
+
+```bash
+node tools/knockout-bg.js logo-raw.png   # solid background -> transparent logo.png
+node tools/trace-logo.js --write         # re-derive the badge outline + UV crop
+node tools/gen-logo-embed.js             # refresh the file:// fallback copy
+```
+
+If the backdrop is a gradient rather than flat, raise the tolerance: `--tol 90`.
+
+The knockout flood-fills inwards from the border rather than keying the
+background colour across the whole image. That distinction matters: an emblem
+containing dark areas the same colour as its backdrop would get holes punched
+straight through it by a global key. Only background connected to the edge is
+removed, and edge pixels get partial alpha so there is no jagged fringe at nav
+size.
+
+### If you are editing the drawn source instead
+
 `images/logo-source.svg` is the **source**. `logo.png` is a build artefact — do
 not edit it by hand, it gets overwritten.
 
