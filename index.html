@@ -88,6 +88,16 @@
       <div class="hero-scrollcue"><span>Scroll to connect</span><span class="line"></span></div>
     </div>
 
+    <!-- Closing block for the banner. The badge docks near the top at the end of
+         the sequence and leaves the middle empty; this fades in to fill it and
+         gives the scroll somewhere to land. Driven from updateProgress(). -->
+    <div id="hero-outro" aria-hidden="true">
+      <p class="ho-kicker">Network linked</p>
+      <h2 class="ho-title">51,000+ families.<br>200+ communities.<br><em>One family.</em></h2>
+      <p class="ho-sub">Connecting communities · Creating opportunities · Building futures</p>
+      <a href="#cta" class="btn btn-gold ho-btn">Join Our Community <span class="arw">&rarr;</span></a>
+    </div>
+
     <div id="hero-stage-label">System status: <b id="stageText">Street view</b></div>
   </div>
 </div>
@@ -940,6 +950,7 @@
   const stageText  = document.getElementById('stageText');
   const heroCopy   = document.getElementById('hero-copy');
   const heroActions= heroCopy.querySelector('.hero-actions');
+  const heroOutro  = document.getElementById('hero-outro');
 
   let W = window.innerWidth, H = window.innerHeight;
 
@@ -1399,6 +1410,15 @@
     heroCopy.style.transform = `translateY(${copyT * -24}px)`;
     /* once faded, the buttons must stop swallowing clicks on the 3D stage */
     heroActions.style.pointerEvents = copyT > 0.6 ? 'none' : 'auto';
+
+    /* The outro fades in as the badge docks, filling the space the sequence
+       empties. aria-hidden tracks it too, so a screen reader is not read a
+       block that is invisible on screen. */
+    const outroT = clamp01((scrollProgress - 0.74)/0.16);
+    heroOutro.style.opacity = String(outroT);
+    heroOutro.style.transform = 'translateY(' + ((1 - outroT) * 26) + 'px)';
+    heroOutro.style.pointerEvents = outroT > 0.6 ? 'auto' : 'none';
+    heroOutro.setAttribute('aria-hidden', outroT > 0.6 ? 'false' : 'true');
 
     if(scrollProgress < 0.24)      stageText.textContent = 'Signal incoming';
     else if(scrollProgress < 0.46) stageText.textContent = 'Tracing the mark';
