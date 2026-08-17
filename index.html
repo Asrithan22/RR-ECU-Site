@@ -819,6 +819,36 @@
     }
     sec.insertBefore(layer, sec.firstChild);
   });
+
+  /* The banner gets a few of its own, out in the sky either side of the
+     headline. Kept to the outer margins: the headline is centred and can run
+     close to the gutters at narrower widths, so anything further in would sit
+     on the type. Hidden under 1100px, where there is no margin left to use. */
+  const stage = document.getElementById('hero-stage');
+  if(stage){
+    const layer = document.createElement('div');
+    layer.className = 'floaties hero-floaties';
+    layer.setAttribute('aria-hidden', 'true');
+    /* All four sit below the headline. At 1280 the headline runs nearly
+       gutter to gutter, so the margins beside it are not actually free — an
+       astronaut at 20% was landing on the "O" of "One City". Above the headline
+       is no good either, that belongs to the nav and the location pill. */
+    [['rocket',    5, 46, 66],
+     ['astronaut', 2, 62, 84],
+     ['planet',   90, 44, 76],
+     ['star',     91, 64, 66]].forEach(([name, l, t, sz], k) => {
+      const el = document.createElement('img');
+      el.src = 'images/deco/' + name + '.svg';
+      el.alt = ''; el.decoding = 'async';
+      el.style.width = sz + 'px'; el.style.height = sz + 'px';
+      el.style.left = l + '%'; el.style.top = t + '%';
+      el.style.opacity = '0.85';
+      el.style.setProperty('--dur', (17 + k * 4) + 's');
+      el.style.setProperty('--delay', '-' + (k * 6) + 's');
+      layer.appendChild(el);
+    });
+    stage.insertBefore(layer, stage.firstChild);
+  }
 })();
 
 

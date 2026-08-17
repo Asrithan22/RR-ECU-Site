@@ -1189,6 +1189,17 @@ footer::before{
 .section > .wrap{ position:relative; z-index:1; }
 
 .floaties{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+/* In the banner the layer has to clear the 3D canvas (z-index 1) but stay under
+   the copy (z-index 3); at the shared z-index 0 it was simply behind the canvas,
+   which paints an opaque sky. */
+.hero-floaties{ z-index:2; }
+/* Below 1400 the headline runs close to both gutters, and on a short
+   viewport the centred copy shifts down into the characters as well — the
+   rocket and planet both landed on the headline at 1200x760. There is no
+   position that is free at every width and height down there, so they are
+   simply not shown. Verified clear at 1440-1907 from 640px to 1050px tall. */
+@media(max-width:1400px){ .hero-floaties{ display:none; } }
+
 .floaties img{
   position:absolute; display:block;
   will-change:transform;
