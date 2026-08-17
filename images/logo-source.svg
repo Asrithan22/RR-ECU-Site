@@ -1,132 +1,150 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 395" width="375" height="395" role="img" aria-label="Electronic City United emblem">
   <!--
-    Redraw of the ECU crest, authored from the supplied artwork.
+    Redraw of the ECU crest, from the supplied artwork.
 
-    This is the SOURCE. tools/render-logo.js renders it to a transparent
-    logo.png, which is what the site and the 3D badge actually consume — the
-    badge needs a raster with a real alpha channel, since it extrudes a
-    silhouette traced from that alpha.
+    SOURCE FILE. tools/render-logo.js renders it to a transparent logo.png,
+    which is what the site and the 3D badge consume — the badge needs a raster
+    with a real alpha channel, since it extrudes a silhouette traced from it.
 
     Nothing outside the shield is painted, so the alpha channel is the crest
-    outline exactly. Do not add a backing rectangle.
+    outline exactly. Never add a backing rectangle.
+
+    The face is split: LEFT is white carrying a gold circuit-brain, RIGHT is deep
+    green carrying the skyline, rocket and stars. An earlier pass had the left
+    half dark navy, which lost the contrast the mark is built on.
   -->
   <defs>
-    <linearGradient id="chrome" x1=".1" y1="0" x2=".9" y2="1">
+    <linearGradient id="chrome" x1=".08" y1="0" x2=".92" y2="1">
       <stop offset="0"   stop-color="#FFFFFF"/>
-      <stop offset=".22" stop-color="#DCE3EA"/>
-      <stop offset=".45" stop-color="#9AA6B2"/>
-      <stop offset=".62" stop-color="#EDF2F6"/>
-      <stop offset=".82" stop-color="#A8B4C0"/>
-      <stop offset="1"   stop-color="#E6ECF2"/>
+      <stop offset=".18" stop-color="#DFE5EB"/>
+      <stop offset=".40" stop-color="#9BA7B3"/>
+      <stop offset=".58" stop-color="#F4F7FA"/>
+      <stop offset=".80" stop-color="#A6B2BE"/>
+      <stop offset="1"   stop-color="#E9EEF3"/>
     </linearGradient>
-    <linearGradient id="gold" x1="0" y1="0" x2=".6" y2="1">
-      <stop offset="0"   stop-color="#FFE58A"/>
-      <stop offset=".45" stop-color="#F0B429"/>
-      <stop offset="1"   stop-color="#A9760C"/>
+    <linearGradient id="goldBand" x1="0" y1="0" x2=".55" y2="1">
+      <stop offset="0"   stop-color="#FFDF7A"/>
+      <stop offset=".38" stop-color="#F5B301"/>
+      <stop offset=".72" stop-color="#E08A00"/>
+      <stop offset="1"   stop-color="#A96700"/>
     </linearGradient>
-    <linearGradient id="faceL" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0E1A26"/><stop offset="1" stop-color="#060C14"/>
+    <linearGradient id="faceL" x1=".1" y1="0" x2=".9" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset=".6" stop-color="#F4F6F8"/><stop offset="1" stop-color="#E4E9EE"/>
     </linearGradient>
-    <linearGradient id="faceR" x1="0" y1="0" x2=".8" y2="1">
-      <stop offset="0" stop-color="#12583A"/><stop offset=".55" stop-color="#0B3B27"/><stop offset="1" stop-color="#072418"/>
+    <linearGradient id="faceR" x1=".1" y1="0" x2=".9" y2="1">
+      <stop offset="0" stop-color="#0E7A34"/><stop offset=".55" stop-color="#08571F"/><stop offset="1" stop-color="#053C15"/>
+    </linearGradient>
+    <linearGradient id="brainG" x1="0" y1="0" x2=".7" y2="1">
+      <stop offset="0" stop-color="#FFC93B"/><stop offset=".55" stop-color="#FF9A0E"/><stop offset="1" stop-color="#E07700"/>
     </linearGradient>
     <linearGradient id="ecuFill" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0"   stop-color="#FFFFFF"/>
-      <stop offset=".42" stop-color="#E3EAF1"/>
-      <stop offset=".55" stop-color="#98A5B2"/>
-      <stop offset=".75" stop-color="#F2F6FA"/>
-      <stop offset="1"   stop-color="#B9C4CF"/>
+      <stop offset=".38" stop-color="#E7ECF1"/>
+      <stop offset=".52" stop-color="#93A0AD"/>
+      <stop offset=".70" stop-color="#F6F9FC"/>
+      <stop offset="1"   stop-color="#AEBAC6"/>
     </linearGradient>
 
-    <!-- one shield, reused at three scales for rim / gold line / face -->
-    <path id="crest" d="M187.5 10 L52 48 C44 50.5 40 57 40 67 L40 196
-      C40 286 104 352 187.5 386 C271 352 335 286 335 196 L335 67
-      C335 57 331 50.5 323 48 Z"/>
+    <!-- Broader than the previous draft, which was too narrow for its height. -->
+    <path id="crest" d="M187.5 12 L36 54 C28 56.5 24 63 24 73 L24 205
+      C24 292 96 356 187.5 383 C279 356 351 292 351 205 L351 73
+      C351 63 347 56.5 339 54 Z"/>
     <clipPath id="faceClip">
-      <use href="#crest" transform="translate(187.5 198) scale(.855) translate(-187.5 -198)"/>
+      <use href="#crest" transform="translate(187.5 200) scale(.86) translate(-187.5 -200)"/>
     </clipPath>
   </defs>
 
   <!-- chrome rim -->
   <use href="#crest" fill="url(#chrome)"/>
-  <!-- gold band just inside it -->
-  <use href="#crest" fill="url(#gold)"
-       transform="translate(187.5 198) scale(.925) translate(-187.5 -198)"/>
-  <!-- inner face -->
+  <!-- gold band inside it -->
+  <use href="#crest" fill="url(#goldBand)"
+       transform="translate(187.5 200) scale(.935) translate(-187.5 -200)"/>
+
   <g clip-path="url(#faceClip)">
     <rect x="0" y="0" width="187.5" height="395" fill="url(#faceL)"/>
     <rect x="187.5" y="0" width="187.5" height="395" fill="url(#faceR)"/>
 
-    <!-- circuit brain, left -->
-    <g stroke="url(#gold)" stroke-width="3.6" fill="none" stroke-linecap="round">
-      <path d="M128 92 c-34 -6 -60 14 -62 42 c-18 12 -20 38 -4 52 c-2 26 20 44 44 40"/>
-      <path d="M128 92 c24 -4 42 10 44 30 c14 12 12 34 -2 44"/>
-      <path d="M106 226 c20 10 44 2 52 -16"/>
-      <path d="M128 92 v142"/>
-      <path d="M108 116 c-14 4 -20 16 -14 28 c-12 8 -10 24 4 28"/>
-      <path d="M148 118 c14 6 18 18 10 28 c10 10 6 26 -8 30"/>
-      <path d="M86 152 c10 -6 20 -4 26 4"/>
-      <path d="M170 154 c-10 -6 -20 -4 -26 4"/>
-      <path d="M94 196 c12 -8 24 -6 32 4"/>
-      <path d="M162 198 c-12 -8 -24 -6 -32 4"/>
+    <!-- ===== left: circuit brain in gold ===== -->
+    <g stroke="url(#brainG)" stroke-width="3.4" fill="none" stroke-linecap="round">
+      <path d="M128 84 c-38 -4 -66 18 -68 48 c-20 12 -22 42 -4 56 c-4 30 22 50 50 46"/>
+      <path d="M128 84 c26 -2 44 14 46 34"/>
+      <path d="M106 234 c22 10 46 0 54 -18"/>
+      <path d="M128 84 v152"/>
+      <path d="M106 112 c-16 6 -22 20 -14 32 c-14 10 -12 28 4 32"/>
+      <path d="M150 116 c16 8 20 22 10 32 c12 12 6 30 -10 34"/>
+      <path d="M80 148 c12 -6 22 -4 28 6"/>
+      <path d="M176 152 c-12 -6 -22 -4 -28 6"/>
+      <path d="M88 200 c14 -8 26 -6 34 6"/>
+      <path d="M168 202 c-14 -8 -26 -6 -34 6"/>
     </g>
-    <g fill="#FFD766">
-      <circle cx="94" cy="144" r="3.8"/><circle cx="112" cy="120" r="3.8"/>
-      <circle cx="128" cy="92"  r="4.2"/><circle cx="146" cy="122" r="3.8"/>
-      <circle cx="170" cy="154" r="3.8"/><circle cx="86"  cy="152" r="3.8"/>
-      <circle cx="98"  cy="196" r="3.8"/><circle cx="130" cy="200" r="4"/>
-      <circle cx="160" cy="196" r="3.8"/><circle cx="128" cy="234" r="4"/>
+    <!-- circuit traces running off the brain toward the centre -->
+    <g stroke="url(#brainG)" stroke-width="2.6" fill="none" stroke-linecap="square">
+      <path d="M158 128 h22 v-20 h16"/>
+      <path d="M162 168 h26 M160 208 h20 v18"/>
+      <path d="M74 172 h-18 v22"/>
     </g>
-
-    <!-- skyline, right -->
-    <g fill="#1E8A5A" opacity=".95">
-      <rect x="206" y="150" width="20" height="118"/>
-      <rect x="232" y="122" width="24" height="146"/>
-      <rect x="262" y="164" width="18" height="104"/>
-      <rect x="286" y="138" width="20" height="130"/>
-      <rect x="312" y="176" width="14" height="92"/>
-    </g>
-    <g fill="#3FD98F" opacity=".55">
-      <rect x="210" y="160" width="4" height="6"/><rect x="218" y="160" width="4" height="6"/>
-      <rect x="236" y="134" width="4" height="6"/><rect x="246" y="134" width="4" height="6"/>
-      <rect x="236" y="150" width="4" height="6"/><rect x="246" y="150" width="4" height="6"/>
-      <rect x="290" y="150" width="4" height="6"/><rect x="298" y="150" width="4" height="6"/>
-    </g>
-    <!-- circuit traces over the skyline -->
-    <g stroke="#3FD98F" stroke-width="2" fill="none" opacity=".5">
-      <path d="M200 108 h40 v-18 h34"/>
-      <path d="M262 112 h30 v-22"/>
-      <path d="M300 120 h26"/>
-    </g>
-    <!-- stars -->
-    <g fill="#BFF3D8">
-      <circle cx="252" cy="72" r="2.4"/><circle cx="292" cy="92" r="2"/><circle cx="318" cy="66" r="2.2"/>
-      <circle cx="222" cy="86" r="1.8"/><circle cx="272" cy="56" r="1.9"/><circle cx="306" cy="108" r="1.7"/>
-    </g>
-    <!-- rocket with a gold trail -->
-    <path d="M212 150 L286 76" stroke="url(#gold)" stroke-width="4" stroke-linecap="round" opacity=".85"/>
-    <g transform="translate(292 70) rotate(45)">
-      <path d="M0 -22 c7 7 10 16 10 24 L0 30 -10 2 c0-8 3-17 10-24 Z" fill="#F4F8FB"/>
-      <circle cy="3" r="4.6" fill="#1E8A5A"/>
-      <path d="M-9 12 l-7 14 8 -2 Z" fill="#B9C4CF"/>
-      <path d="M9 12 l7 14 -8 -2 Z" fill="#B9C4CF"/>
-      <path d="M-5 31 q5 14 5 19 q0-5 5-19 Z" fill="#F0B429"/>
+    <g fill="#FFB020">
+      <circle cx="128" cy="84" r="4.4"/><circle cx="106" cy="112" r="3.8"/><circle cx="150" cy="116" r="3.8"/>
+      <circle cx="80"  cy="148" r="3.8"/><circle cx="176" cy="152" r="3.8"/><circle cx="88" cy="200" r="3.8"/>
+      <circle cx="168" cy="202" r="3.8"/><circle cx="128" cy="236" r="4.2"/>
+      <circle cx="196" cy="108" r="3.6"/><circle cx="188" cy="168" r="3.6"/><circle cx="180" cy="226" r="3.6"/>
+      <circle cx="56"  cy="194" r="3.6"/>
     </g>
 
-    <!-- bar chart -->
-    <g>
-      <rect x="136" y="276" width="19" height="62" rx="3" fill="#1E8A5A"/>
-      <rect x="159" y="250" width="19" height="88" rx="3" fill="#EDF1F5"/>
-      <rect x="182" y="288" width="19" height="50" rx="3" fill="#F0851F"/>
-      <rect x="205" y="238" width="19" height="100" rx="3" fill="#1E8A5A"/>
-      <rect x="228" y="268" width="19" height="70" rx="3" fill="#F0851F"/>
+    <!-- ===== right: green city ===== -->
+    <g fill="#0B6A28" stroke="#7FE08A" stroke-width="2.6">
+      <rect x="206" y="192" width="26" height="118"/>
+      <rect x="240" y="156" width="30" height="154"/>
+      <rect x="278" y="210" width="24" height="100"/>
+      <rect x="310" y="176" width="26" height="134"/>
+    </g>
+    <g fill="#7FE08A" opacity=".55">
+      <rect x="212" y="202" width="5" height="7"/><rect x="222" y="202" width="5" height="7"/>
+      <rect x="246" y="168" width="5" height="7"/><rect x="258" y="168" width="5" height="7"/>
+      <rect x="246" y="186" width="5" height="7"/><rect x="258" y="186" width="5" height="7"/>
+      <rect x="284" y="222" width="5" height="7"/><rect x="294" y="222" width="5" height="7"/>
+      <rect x="316" y="188" width="5" height="7"/><rect x="326" y="188" width="5" height="7"/>
+    </g>
+    <!-- spire on the tallest tower -->
+    <path d="M255 156 v-22" stroke="#7FE08A" stroke-width="3"/>
+    <!-- circuit traces in the sky -->
+    <g stroke="#7FE08A" stroke-width="2.2" fill="none" opacity=".55">
+      <path d="M200 118 h34 v-20 h30"/>
+      <path d="M268 128 h28 v-26"/>
+      <path d="M304 138 h30 v-18"/>
+    </g>
+    <!-- gold stars -->
+    <g fill="#FFD24A">
+      <path d="M232 84 l3.4 8 8 3.4 -8 3.4 -3.4 8 -3.4 -8 -8 -3.4 8 -3.4 Z"/>
+      <path d="M300 72 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 Z"/>
+      <path d="M336 108 l2.6 6 6 2.6 -6 2.6 -2.6 6 -2.6 -6 -6 -2.6 6 -2.6 Z"/>
+      <circle cx="270" cy="96" r="2.4"/><circle cx="318" cy="152" r="2.2"/><circle cx="212" cy="150" r="2.2"/>
+    </g>
+    <!-- rocket climbing out of the city, orange trail behind it -->
+    <path d="M222 208 L296 122" stroke="#FF8A00" stroke-width="5" stroke-linecap="round" opacity=".9"/>
+    <g transform="translate(304 112) rotate(42)">
+      <path d="M0 -26 c8 8 12 19 12 28 L0 34 -12 2 c0-9 4-20 12-28 Z" fill="#FFFFFF"/>
+      <circle cy="2" r="5.2" fill="#0E7A34"/>
+      <path d="M-11 14 l-9 15 10 -2 Z" fill="#DDE4EA"/>
+      <path d="M11 14 l9 15 -10 -2 Z" fill="#DDE4EA"/>
+      <path d="M-6 35 q6 16 6 22 q0-6 6-22 Z" fill="#FF8A00"/>
+    </g>
+
+    <!-- Arrow-headed bars across the foot. Outlined because the white one sits
+         on the white half of the face and was invisible without an edge. -->
+    <g stroke="#33403A" stroke-width="2" stroke-linejoin="round">
+      <path d="M126 352 v-78 l-14 0 19 -26 19 26 -14 0 v78 Z" fill="#1FA23C"/>
+      <path d="M160 352 v-104 l-14 0 19 -26 19 26 -14 0 v104 Z" fill="#F2F5F8"/>
+      <path d="M194 352 v-66 l-14 0 19 -26 19 26 -14 0 v66 Z" fill="#FF8A00"/>
+      <path d="M228 352 v-116 l-14 0 19 -26 19 26 -14 0 v116 Z" fill="#1FA23C"/>
+      <path d="M262 352 v-86 l-14 0 19 -26 19 26 -14 0 v86 Z" fill="#FF8A00"/>
     </g>
   </g>
 
-  <!-- ECU wordmark, over the face -->
-  <text x="187.5" y="238" text-anchor="middle"
+  <!-- ECU wordmark, chrome, spanning the centre -->
+  <text x="187.5" y="248" text-anchor="middle"
         font-family="'Plus Jakarta Sans','Segoe UI',system-ui,sans-serif"
-        font-size="92" font-weight="800" letter-spacing="1"
-        fill="url(#ecuFill)" stroke="#6E7B88" stroke-width="1.6"
+        font-size="104" font-weight="800" letter-spacing="-1"
+        fill="url(#ecuFill)" stroke="#39434E" stroke-width="4.5" stroke-linejoin="round"
         paint-order="stroke">ECU</text>
 </svg>
