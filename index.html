@@ -58,8 +58,18 @@
       <span class="hb b5"></span>
     </div>
 
+    <!-- Optional banner video. Stays hidden until the browser confirms it can
+         actually play the file, so a missing videos/hero.mp4 leaves the sky and
+         3D badge exactly as they are rather than a black panel. -->
+    <video id="hero-video" muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1">
+      <source src="videos/hero.webm" type="video/webm">
+      <source src="videos/hero.mp4" type="video/mp4">
+    </video>
+
     <canvas id="hero-canvas"></canvas>
     <canvas id="glow-canvas"></canvas>
+
+    <img class="hero-cartoons" src="images/cartoon-family.svg" alt="" aria-hidden="true">
 
     <div id="hero-copy">
       <img class="hero-static-mark" src="logo.png" alt="" aria-hidden="true">
@@ -428,6 +438,18 @@
       </div>
     </div>
 
+    <div class="fest-video reveal">
+      <!-- Same pattern as the banner: the poster art is the real content until a
+           file exists, and the <video> only replaces it once it can play. -->
+      <img class="fv-art" src="images/cartoon-festival.svg" alt="Illustration of children celebrating on the festival stage">
+      <video id="festival-video" class="fv-vid" controls playsinline preload="none"
+             poster="images/cartoon-festival.svg">
+        <source src="videos/festival.webm" type="video/webm">
+        <source src="videos/festival.mp4" type="video/mp4">
+      </video>
+      <p class="fv-cap">A day at the Family Excellence Festival</p>
+    </div>
+
     <div class="spon-grid">
       <article class="spon-card sc-why reveal" style="--i:1">
         <h3>Why partner with us</h3>
@@ -684,6 +706,52 @@
       });
     }, { threshold:0.5 });
     nums.forEach(el => nio.observe(el));
+  }
+})();
+
+
+/* ============================================================
+   1z. VIDEO SLOTS — reveal a video only once the browser has
+   confirmed it can play it. The slots ship empty, so the default
+   path is "no file": a 404, an unsupported codec or a blocked
+   autoplay must all leave the artwork in place rather than a
+   black rectangle. Hence opting IN on canplay, rather than
+   showing the video and hiding it on error — `error` does not
+   fire reliably for every one of those cases.
+   ============================================================ */
+(function(){
+  const hero = document.getElementById('hero-video');
+  if(hero){
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce){
+      /* a looping background clip is exactly the kind of motion this setting
+         is asking us not to play, so never start it */
+      hero.remove();
+    } else {
+      hero.addEventListener('canplay', () => {
+        hero.classList.add('ready');
+        document.getElementById('hero-wrapper').classList.add('has-video');
+        const p = hero.play();
+        /* autoplay can still be refused even muted; roll back if so */
+        if(p && p.catch) p.catch(() => {
+          hero.classList.remove('ready');
+          document.getElementById('hero-wrapper').classList.remove('has-video');
+        });
+      }, { once:true });
+      hero.load();
+    }
+  }
+
+  const fest = document.getElementById('festival-video');
+  if(fest){
+    /* preload="none" means canplay will not fire until something asks for the
+       file, so probe the first source with a HEAD request instead. */
+    const src = fest.querySelector('source[type="video/mp4"]');
+    if(src){
+      fetch(src.getAttribute('src'), { method:'HEAD' })
+        .then(r => { if(r.ok) fest.classList.add('ready'); })
+        .catch(() => {});
+    }
   }
 })();
 

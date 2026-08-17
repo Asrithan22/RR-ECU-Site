@@ -446,9 +446,10 @@ a{ color:inherit; text-decoration:none; }
 
 #hero-stage-label{
   position:absolute; right:var(--gutter);
-  /* 10vh alone put this inside the back-to-top button's corner on short
-     viewports — the button stands 86px off the bottom, so never sit below that. */
-  bottom:max(10vh, 104px); z-index:3;
+  /* Must clear two things: the back-to-top button (86px off the bottom) and
+     the cartoon band, which is width/6 tall and now runs the full width. Same
+     reservation as the hero copy uses. */
+  bottom:calc(26px + clamp(80px, 17vw, 250px)); z-index:3;
   font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
   color:var(--ink-500); text-align:right; pointer-events:none;
 }
@@ -1118,6 +1119,50 @@ footer::before{
 }
 .to-top.launch .tt-rocket{ animation:rocket-launch .85s cubic-bezier(.4,0,.5,1); }
 .to-top.launch .tt-trail { animation:rocket-trail .85s ease-out; }
+
+/* ---------- 14a. CARTOONS + VIDEO ---------- */
+
+/* Banner video sits under everything the 3D draws. Hidden until the script
+   confirms it can play — see the video module in index.html. */
+#hero-video{
+  position:absolute; inset:0; z-index:1;
+  width:100%; height:100%; object-fit:cover;
+  opacity:0; transition:opacity .8s ease; pointer-events:none;
+}
+#hero-video.ready{ opacity:1; }
+/* with a video behind it, the canvas must stop painting an opaque sky over it */
+#hero-wrapper.has-video #hero-canvas{ mix-blend-mode:multiply; }
+
+/* Cartoon band along the foot of the banner. Above the canvas, below the copy,
+   and never in the way of a click. */
+.hero-cartoons{
+  position:absolute; left:0; right:0; bottom:0; z-index:2;
+  /* full-bleed: let width drive height so the band spans edge to edge.
+     object-fit:contain squeezed it into a narrow centred strip instead. */
+  width:100%; height:auto;
+  pointer-events:none; user-select:none;
+  opacity:.96;
+}
+
+/* keep the hero copy clear of the cartoon band */
+/* the band is width/6 tall, so reserve that much plus breathing room */
+#hero-copy{ padding-bottom:calc(4vh + clamp(80px, 17vw, 250px)); }
+#hero-wrapper.no3d #hero-copy{ padding-bottom:calc(48px + clamp(80px, 17vw, 250px)); }
+
+/* Festival video card */
+.fest-video{
+  position:relative; margin-top:22px; border-radius:var(--r-lg); overflow:hidden;
+  background:var(--white); border:1px solid var(--grey-200); box-shadow:var(--sh-sm);
+}
+.fest-video .fv-art,
+.fest-video .fv-vid{ display:block; width:100%; aspect-ratio:16/9; object-fit:cover; }
+/* the poster art is what shows until a real file plays */
+.fest-video .fv-vid{ position:absolute; inset:0; height:100%; opacity:0; pointer-events:none; transition:opacity .5s ease; }
+.fest-video .fv-vid.ready{ opacity:1; pointer-events:auto; }
+.fest-video .fv-cap{
+  padding:14px 20px; font-size:14px; font-weight:700; color:var(--ink-700);
+  border-top:1px solid var(--grey-200);
+}
 
 /* ---------- 14b. FLOATING SHAPES ----------
    Soft pastel shapes drifting behind every light section, so the page always has

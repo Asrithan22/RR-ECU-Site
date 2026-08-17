@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 506" width="900" height="506" role="img" aria-label="Cartoon children celebrating on a festival stage">
+  <!-- Poster/fallback art for the festival video slot. Animates as an <img>;
+       carries its own reduced-motion query for the same reason as the hero band. -->
+  <style>
+    .sway  { animation: sway 3.4s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+    .sway2 { animation: sway 4.1s ease-in-out .6s infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+    .jump  { animation: jump 1.9s cubic-bezier(.5,0,.5,1) infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+    .spin  { animation: spin 9s linear infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+    .twinkle  { animation: tw 2.2s ease-in-out infinite; }
+    .twinkle2 { animation: tw 3s ease-in-out .8s infinite; }
+    .conf  { animation: fall 4.6s linear infinite; transform-box: fill-box; }
+    .conf2 { animation: fall 5.8s linear 1.4s infinite; transform-box: fill-box; }
+    .conf3 { animation: fall 5.1s linear 2.6s infinite; transform-box: fill-box; }
+
+    @keyframes sway { 0%,100%{ transform: rotate(-3deg) } 50%{ transform: rotate(3deg) } }
+    @keyframes jump { 0%,100%{ transform: translateY(0) } 14%{ transform: translateY(0) scaleY(.9) } 52%{ transform: translateY(-34px) } }
+    @keyframes spin { to { transform: rotate(360deg) } }
+    @keyframes tw   { 0%,100%{ opacity:.25; transform:scale(.8) } 50%{ opacity:1; transform:scale(1.15) } }
+    @keyframes fall { 0%{ transform: translateY(-40px) rotate(0);   opacity:0 }
+                      12%{ opacity:1 }
+                      100%{ transform: translateY(300px) rotate(320deg); opacity:0 } }
+
+    @media (prefers-reduced-motion: reduce){
+      .sway,.sway2,.jump,.spin,.twinkle,.twinkle2,.conf,.conf2,.conf3{ animation: none !important; }
+    }
+  </style>
+
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"   stop-color="#DDF2FF"/>
+      <stop offset=".62" stop-color="#EFF8FF"/>
+      <stop offset="1"   stop-color="#FFF3E8"/>
+    </linearGradient>
+    <linearGradient id="stage" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7C4DCC"/><stop offset="1" stop-color="#4A2E7A"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="506" fill="url(#sky)"/>
+
+  <!-- bunting -->
+  <path d="M0 44 Q225 96 450 60 T900 44" stroke="#C6D6E6" stroke-width="3" fill="none"/>
+  <g>
+    <path d="M96 62 l22 2 -9 26 Z"  fill="#FF7DA0" class="sway"/>
+    <path d="M186 76 l22 2 -9 26 Z" fill="#FFC94D" class="sway2"/>
+    <path d="M282 84 l22 1 -10 26 Z" fill="#3FD6C4" class="sway"/>
+    <path d="M382 84 l22 0 -11 26 Z" fill="#9E77E0" class="sway2"/>
+    <path d="M482 74 l22 -1 -10 26 Z" fill="#6BD66C" class="sway"/>
+    <path d="M582 62 l22 -2 -9 26 Z" fill="#FF7DA0" class="sway2"/>
+    <path d="M682 52 l22 -2 -9 26 Z" fill="#5AA9F0" class="sway"/>
+    <path d="M782 46 l22 -1 -10 26 Z" fill="#FFC94D" class="sway2"/>
+  </g>
+
+  <!-- twinkles -->
+  <g fill="#FFC94D">
+    <path class="twinkle"  d="M120 150 l7 17 17 7 -17 7 -7 17 -7-17 -17-7 17-7 Z"/>
+    <path class="twinkle2" d="M762 176 l6 14 14 6 -14 6 -6 14 -6-14 -14-6 14-6 Z"/>
+    <path class="twinkle"  d="M660 118 l5 12 12 5 -12 5 -5 12 -5-12 -12-5 12-5 Z"/>
+  </g>
+
+  <!-- confetti -->
+  <g>
+    <rect class="conf"  x="250" y="90" width="11" height="16" rx="3" fill="#FF7DA0"/>
+    <rect class="conf2" x="470" y="70" width="10" height="15" rx="3" fill="#3FD6C4"/>
+    <rect class="conf3" x="618" y="86" width="11" height="16" rx="3" fill="#FFC94D"/>
+    <rect class="conf2" x="352" y="60" width="10" height="14" rx="3" fill="#9E77E0"/>
+    <rect class="conf"  x="540" y="96" width="10" height="15" rx="3" fill="#6BD66C"/>
+  </g>
+
+  <!-- stage -->
+  <rect x="130" y="392" width="640" height="26" rx="10" fill="url(#stage)"/>
+  <rect x="150" y="418" width="600" height="14" rx="7" fill="#2A1A47" opacity=".55"/>
+
+  <!-- kids on stage -->
+  <g class="jump">
+    <g transform="translate(340 0)">
+      <path d="M-24 392 v-58 a24 24 0 0 1 48 0 v58 Z" fill="#F2557F"/>
+      <circle cy="308" r="23" fill="#FFE0C4"/>
+      <path d="M-23 304 a23 23 0 0 1 46 0 q-11-12 -23-12 t-23 12 Z" fill="#3A2B1E"/>
+      <circle cx="-8" cy="311" r="3" fill="#2F2A3D"/><circle cx="8" cy="311" r="3" fill="#2F2A3D"/>
+      <path d="M-8 320 q8 8 16 0" stroke="#2F2A3D" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <rect x="-40" y="326" width="11" height="40" rx="6" fill="#FFE0C4" transform="rotate(-32 -34 346)"/>
+      <rect x="29"  y="326" width="11" height="40" rx="6" fill="#FFE0C4" transform="rotate(32 34 346)"/>
+    </g>
+  </g>
+
+  <g class="sway">
+    <g transform="translate(450 0)">
+      <path d="M-27 392 v-66 a27 27 0 0 1 54 0 v66 Z" fill="#12B9A6"/>
+      <circle cy="292" r="25" fill="#F6C89A"/>
+      <path d="M-25 288 a25 25 0 0 1 50 0 q-10-14 -25-14 t-25 14 Z" fill="#2F2A3D"/>
+      <circle cx="-9" cy="295" r="3" fill="#2F2A3D"/><circle cx="9" cy="295" r="3" fill="#2F2A3D"/>
+      <path d="M-9 305 q9 8 18 0" stroke="#2F2A3D" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <rect x="-44" y="318" width="12" height="44" rx="6" fill="#F6C89A" transform="rotate(-24 -38 340)"/>
+      <rect x="32"  y="318" width="12" height="44" rx="6" fill="#F6C89A" transform="rotate(24 38 340)"/>
+    </g>
+  </g>
+
+  <g class="jump" style="animation-delay:.7s">
+    <g transform="translate(556 0)">
+      <path d="M-23 392 v-56 a23 23 0 0 1 46 0 v56 Z" fill="#FFC94D"/>
+      <circle cy="310" r="22" fill="#FFD9B8"/>
+      <path d="M-22 306 a22 22 0 0 1 44 0 q-10-12 -22-12 t-22 12 Z" fill="#8A4A22"/>
+      <circle cx="-8" cy="313" r="2.8" fill="#2F2A3D"/><circle cx="8" cy="313" r="2.8" fill="#2F2A3D"/>
+      <path d="M-7 322 q7 7 14 0" stroke="#2F2A3D" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <rect x="-38" y="328" width="11" height="38" rx="6" fill="#FFD9B8" transform="rotate(-30 -32 347)"/>
+      <rect x="27"  y="328" width="11" height="38" rx="6" fill="#FFD9B8" transform="rotate(30 32 347)"/>
+    </g>
+  </g>
+
+  <!-- spinning star above the stage -->
+  <g class="spin">
+    <path d="M450 176 l12 30 30 12 -30 12 -12 30 -12-30 -30-12 30-12 Z" fill="#FF7DA0" opacity=".9"/>
+  </g>
+</svg>

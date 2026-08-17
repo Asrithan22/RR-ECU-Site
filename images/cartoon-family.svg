@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 300" width="1800" height="300" role="img" aria-label="Cartoon families waving">
+  <!--
+    Animated cartoon band for the foot of the banner. Self-contained: the CSS
+    below runs even when this file is used as an <img>, so the page does not
+    have to inline several hundred lines of paths to animate them.
+
+    The reduced-motion query is repeated here on purpose — a media query in the
+    parent document does not reach inside an <img>-embedded SVG, so the page's
+    global kill-switch cannot stop these on its own.
+  -->
+  <style>
+    .bob   { animation: bob 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+    .bob2  { animation: bob 2.6s ease-in-out .4s infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+    .bob3  { animation: bob 3.8s ease-in-out .9s infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+    .wave  { animation: wave 1.5s ease-in-out infinite; transform-box: fill-box; transform-origin: 18% 88%; }
+    .wave2 { animation: wave 1.9s ease-in-out .5s infinite; transform-box: fill-box; transform-origin: 82% 88%; }
+    .ball  { animation: bounce 1.8s cubic-bezier(.5,0,.5,1) infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+    .flo   { animation: floaty 5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+    .flo2  { animation: floaty 6.4s ease-in-out 1.1s infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+
+    @keyframes bob    { 0%,100%{ transform: translateY(0)      } 50%{ transform: translateY(-7px) } }
+    @keyframes wave   { 0%,100%{ transform: rotate(-12deg)     } 50%{ transform: rotate(26deg)    } }
+    @keyframes bounce { 0%,100%{ transform: translateY(0) scaleY(1) } 12%{ transform: translateY(0) scaleY(.86) }
+                        50% { transform: translateY(-58px) scaleY(1.04) } }
+    @keyframes floaty { 0%,100%{ transform: translateY(0) rotate(-3deg) } 50%{ transform: translateY(-16px) rotate(4deg) } }
+
+    @media (prefers-reduced-motion: reduce){
+      .bob,.bob2,.bob3,.wave,.wave2,.ball,.flo,.flo2{ animation: none !important; }
+    }
+  </style>
+
+  <defs>
+    <g id="kite-shape">
+      <path d="M0 -22 L16 0 L0 22 L-16 0 Z"/>
+    </g>
+  </defs>
+
+  <!-- balloons drifting above the group -->
+  <g class="flo">
+    <path d="M168 96 q6 34 -3 62" stroke="#C6D6E6" stroke-width="3" fill="none"/>
+    <ellipse cx="168" cy="76" rx="24" ry="29" fill="#FF7DA0"/>
+    <ellipse cx="161" cy="66" rx="7" ry="9" fill="#fff" opacity=".45"/>
+  </g>
+  <g class="flo2">
+    <path d="M1644 104 q-7 32 2 58" stroke="#C6D6E6" stroke-width="3" fill="none"/>
+    <ellipse cx="1644" cy="84" rx="21" ry="26" fill="#3FD6C4"/>
+    <ellipse cx="1638" cy="75" rx="6" ry="8" fill="#fff" opacity=".45"/>
+  </g>
+  <g class="flo">
+    <path d="M760 88 q5 30 -2 54" stroke="#C6D6E6" stroke-width="3" fill="none"/>
+    <ellipse cx="760" cy="70" rx="19" ry="24" fill="#FFC94D"/>
+  </g>
+
+  <!-- bouncing ball -->
+  <g class="ball">
+    <circle cx="900" cy="262" r="21" fill="#5AA9F0"/>
+    <path d="M879 262 h42 M900 241 v42" stroke="#fff" stroke-width="3.4" opacity=".7"/>
+  </g>
+
+  <!-- ============ family group, left ============ -->
+  <g class="bob">
+    <!-- adult -->
+    <g transform="translate(268 0)">
+      <path d="M-30 286 v-76 a30 30 0 0 1 60 0 v76 Z" fill="#7C4DCC"/>
+      <rect x="-11" y="256" width="9" height="32" rx="4" fill="#4A2E7A"/>
+      <rect x="4"  y="256" width="9" height="32" rx="4" fill="#4A2E7A"/>
+      <circle cy="182" r="27" fill="#FFD9B8"/>
+      <path d="M-27 176 a27 27 0 0 1 54 0 q-14-12 -27-12 t-27 12 Z" fill="#2F2A3D"/>
+      <circle cx="-9" cy="184" r="3" fill="#2F2A3D"/><circle cx="9" cy="184" r="3" fill="#2F2A3D"/>
+      <path d="M-8 194 q8 7 16 0" stroke="#2F2A3D" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <g class="wave"><rect x="-46" y="212" width="12" height="46" rx="6" fill="#FFD9B8"/></g>
+      <rect x="34" y="216" width="12" height="42" rx="6" fill="#FFD9B8"/>
+    </g>
+  </g>
+
+  <g class="bob2">
+    <!-- child -->
+    <g transform="translate(330 0)">
+      <path d="M-21 288 v-52 a21 21 0 0 1 42 0 v52 Z" fill="#F2557F"/>
+      <rect x="-9" y="266" width="8" height="24" rx="4" fill="#B32A52"/>
+      <rect x="2"  y="266" width="8" height="24" rx="4" fill="#B32A52"/>
+      <circle cy="216" r="20" fill="#FFE0C4"/>
+      <path d="M-20 212 a20 20 0 0 1 40 0 q-10-10 -20-10 t-20 10 Z" fill="#8A4A22"/>
+      <circle cx="-7" cy="218" r="2.6" fill="#2F2A3D"/><circle cx="7" cy="218" r="2.6" fill="#2F2A3D"/>
+      <path d="M-6 226 q6 6 12 0" stroke="#2F2A3D" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <rect x="-32" y="236" width="10" height="34" rx="5" fill="#FFE0C4"/>
+      <g class="wave2"><rect x="22" y="236" width="10" height="34" rx="5" fill="#FFE0C4"/></g>
+    </g>
+  </g>
+
+  <!-- ============ family group, right ============ -->
+  <g class="bob3">
+    <g transform="translate(1524 0)">
+      <path d="M-29 286 v-74 a29 29 0 0 1 58 0 v74 Z" fill="#12B9A6"/>
+      <rect x="-11" y="256" width="9" height="32" rx="4" fill="#0A7A6C"/>
+      <rect x="4"  y="256" width="9" height="32" rx="4" fill="#0A7A6C"/>
+      <circle cy="184" r="26" fill="#F6C89A"/>
+      <path d="M-26 180 a26 26 0 0 1 52 0 q-9-16 -26-16 t-26 16 Z" fill="#3A2B1E"/>
+      <circle cx="-9" cy="186" r="3" fill="#2F2A3D"/><circle cx="9" cy="186" r="3" fill="#2F2A3D"/>
+      <path d="M-8 195 q8 7 16 0" stroke="#2F2A3D" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <rect x="-44" y="214" width="12" height="44" rx="6" fill="#F6C89A"/>
+      <g class="wave2"><rect x="32" y="214" width="12" height="44" rx="6" fill="#F6C89A"/></g>
+    </g>
+  </g>
+
+  <g class="bob2">
+    <g transform="translate(1462 0)">
+      <path d="M-20 288 v-50 a20 20 0 0 1 40 0 v50 Z" fill="#FFC94D"/>
+      <rect x="-9" y="268" width="8" height="22" rx="4" fill="#A66A05"/>
+      <rect x="2"  y="268" width="8" height="22" rx="4" fill="#A66A05"/>
+      <circle cy="218" r="19" fill="#FFD9B8"/>
+      <path d="M-19 214 a19 19 0 0 1 38 0 q-9-11 -19-11 t-19 11 Z" fill="#2F2A3D"/>
+      <circle cx="-7" cy="220" r="2.6" fill="#2F2A3D"/><circle cx="7" cy="220" r="2.6" fill="#2F2A3D"/>
+      <path d="M-6 228 q6 6 12 0" stroke="#2F2A3D" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <g class="wave"><rect x="-30" y="238" width="10" height="32" rx="5" fill="#FFD9B8"/></g>
+      <rect x="20" y="238" width="10" height="32" rx="5" fill="#FFD9B8"/>
+    </g>
+  </g>
+
+  <!-- ground line the group stands on -->
+  <path d="M0 289 H1800" stroke="#CBDCEA" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+</svg>
