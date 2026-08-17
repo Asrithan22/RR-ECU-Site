@@ -1102,11 +1102,24 @@ footer::before{
   color:var(--on-dark-3);
 }
 .fp-mark{
-  width:clamp(210px, 26vw, 300px); height:auto;
-  opacity:.96; transition:opacity .3s ease, transform .3s cubic-bezier(.16,1,.3,1);
+  width:clamp(120px, 15vw, 168px); height:auto;
+  transition:transform .3s cubic-bezier(.16,1,.3,1);
 }
-.fp-mark:hover{ opacity:1; transform:translateY(-2px); }
-@media(max-width:600px){ .fp-mark{ width:min(260px, 82vw); } }
+.foot-parent:hover .fp-mark{ transform:translateY(-3px); }
+.fp-name{
+  margin-top:4px;
+  font-family:Georgia,'Times New Roman',serif; font-size:clamp(17px,2vw,22px);
+  font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:#E8B84B;
+}
+.fp-tag{
+  font-size:clamp(11px,1.2vw,12.5px); font-weight:600; letter-spacing:.13em;
+  text-transform:uppercase; color:#C9A24E;
+}
+@media(max-width:600px){
+  .fp-mark{ width:min(140px, 42vw); }
+  .fp-tag{ letter-spacing:.08em; }
+}
 
 .foot-bot{
   max-width:var(--maxw); margin:34px auto 0; padding-top:22px;

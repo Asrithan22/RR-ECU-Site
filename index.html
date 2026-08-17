@@ -541,8 +541,13 @@
 
   <div class="foot-parent">
     <span class="fp-label">Powered by</span>
-    <img class="fp-mark" src="images/rr-logo.svg"
-         alt="RR International Group — Right People, Right Time, Right Product, Right Hand">
+    <!-- The supplied monogram. alt is empty because the name follows as real
+         text — otherwise a screen reader announces it twice. Setting the
+         wordmark as text rather than baking it into the image keeps it
+         selectable, scalable and translatable. -->
+    <img class="fp-mark" src="images/rr-mark.png" alt="">
+    <p class="fp-name">RR International Group</p>
+    <p class="fp-tag">Right People &middot; Right Time &middot; Right Product &middot; Right Hand</p>
   </div>
 
   <div class="foot-bot">
