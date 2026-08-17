@@ -11,8 +11,9 @@ Live: https://asrithan22.github.io/RR-ECU-Site/
 | ------------------------ | ----------------------------------------------------------- |
 | `index.html`             | Whole site — markup plus the hero and UI scripts             |
 | `style.css`              | Design system and all section styling                        |
-| `logo.png`               | ECU emblem — nav, footer, favicon, and the 3D hero texture   |
-| `logo-vivid.svg`         | Brighter emblem exploration, not yet in use — see below      |
+| `images/logo-source.svg` | **Source** for the emblem — edit this one                     |
+| `logo.png`               | Generated from it. Nav, footer, favicon and the 3D texture   |
+| `logo-vivid.svg`         | Earlier emblem exploration, not in use                       |
 | `logo-embed.js`          | Generated. `logo.png` as a data URI, used only as a fallback |
 | `tools/gen-logo-embed.js`| Regenerates `logo-embed.js`                                  |
 | `images/`                | Photo slots for the *What We Do* cards (see its README)      |
@@ -76,7 +77,33 @@ Four rules the design depends on:
   violet silently dropped its gold chip to 3.58:1. Changing a background means
   re-checking everything sitting on it.
 
-## Logo exploration
+## Changing the logo
+
+`images/logo-source.svg` is the **source**. `logo.png` is a build artefact — do
+not edit it by hand, it gets overwritten.
+
+```bash
+node tools/render-logo.js          # SVG -> transparent logo.png at 2x
+node tools/trace-logo.js --write   # re-derive the badge outline + UV crop
+node tools/gen-logo-embed.js       # refresh the file:// fallback copy
+```
+
+Run all three, in that order, after any change to the emblem.
+
+**Why it is three steps and not one file.** The nav, footer and favicon could use
+an SVG directly. The 3D hero badge cannot: its texture loader needs a raster, and
+the badge is not a picture of the logo on a card — it extrudes a silhouette
+traced from the PNG's alpha channel, with the artwork UV-cropped to the opaque
+pixels so the two register exactly. Change the emblem's shape without re-running
+`trace-logo.js` and the badge keeps the old outline while showing the new art.
+
+**The PNG must have a transparent background.** An emblem on an opaque rectangle
+traces to a rectangle and the badge extrudes a slab. `trace-logo.js` refuses that
+case rather than emitting a four-corner "shield", and `render-logo.js` clears the
+page background through the DevTools protocol to guarantee it — Chrome's plain
+`--screenshot` flag would composite onto white.
+
+## Earlier logo exploration
 
 `logo-vivid.svg` is a brighter alternative to `logo.png`, for review. **Nothing
 uses it yet** — the site still ships the original everywhere.
