@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" role="img" aria-label="RR International Group — Right People, Right Time, Right Product, Right Hand">
+  <!--
+    RR International Group mark, redrawn from the supplied artwork.
+
+    Transparent ground on purpose: the site is light now while the original sits
+    on dark navy, and gold on transparent works on either. A flattened navy
+    rectangle would not.
+
+    The viewBox is 760 wide because the wordmark needs it — at 420 the first and
+    last few characters of both lines were clipped straight off the canvas.
+  -->
+  <defs>
+    <linearGradient id="rrGold" x1=".1" y1="0" x2=".75" y2="1">
+      <stop offset="0"   stop-color="#FBE9A8"/>
+      <stop offset=".16" stop-color="#E8B84B"/>
+      <stop offset=".40" stop-color="#B87F1E"/>
+      <stop offset=".56" stop-color="#F5D482"/>
+      <stop offset=".76" stop-color="#C08C22"/>
+      <stop offset="1"   stop-color="#8C6112"/>
+    </linearGradient>
+    <linearGradient id="rrEdge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF6D6"/><stop offset="1" stop-color="#8A5F10"/>
+    </linearGradient>
+    <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0"   stop-color="#8C6112" stop-opacity="0"/>
+      <stop offset=".5"  stop-color="#E8B84B"/>
+      <stop offset="1"   stop-color="#8C6112" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- one serif R, reused for both halves of the monogram -->
+    <path id="rrR" fill-rule="evenodd"
+      d="M8 0 H78 C112 0 132 20 132 48 C132 70 120 85 100 91 L136 170 H92 L62 96 H44 V170 H8 Z
+         M44 26 V68 H74 C88 68 96 60 96 47 C96 34 88 26 74 26 Z"/>
+  </defs>
+
+  <!-- ===== monogram ===== -->
+  <g stroke="url(#rrEdge)" stroke-width="2.2" stroke-linejoin="round">
+    <!-- back R, set slightly low and dimmer so the pair reads as interlocked -->
+    <use href="#rrR" transform="translate(372 30)" fill="url(#rrGold)" opacity=".92"/>
+    <!-- front R -->
+    <use href="#rrR" transform="translate(252 22)" fill="url(#rrGold)"/>
+  </g>
+
+  <!-- compass star where the two meet -->
+  <g transform="translate(388 96)">
+    <path d="M0 -46 L10 -12 L44 0 L10 12 L0 46 L-10 12 L-44 0 L-10 -12 Z"
+          fill="url(#rrGold)" stroke="url(#rrEdge)" stroke-width="1.6"/>
+    <path d="M0 -30 L6 -8 L28 0 L6 8 L0 30 L-6 8 L-28 0 L-6 -8 Z" fill="#FFF6D6" opacity=".9"/>
+    <!-- short diagonals, so it reads as a compass rose rather than a sparkle -->
+    <g stroke="url(#rrEdge)" stroke-width="2" opacity=".75">
+      <path d="M-19 -19 L-7 -7 M19 -19 L7 -7 M-19 19 L-7 7 M19 19 L7 7"/>
+    </g>
+  </g>
+
+  <!-- ===== wordmark ===== -->
+  <text x="380" y="248" text-anchor="middle"
+        font-family="Georgia,'Times New Roman',serif" font-weight="700"
+        font-size="40" letter-spacing="1.5" fill="url(#rrGold)">RR<tspan
+        font-size="33" letter-spacing="2.6"> INTERNATIONAL GROUP</tspan></text>
+
+  <!-- divider with a small diamond -->
+  <path d="M120 274 H362 M398 274 H640" stroke="url(#rule)" stroke-width="2.4"/>
+  <path d="M380 265 l10 9 -10 9 -10 -9 Z" fill="url(#rrGold)"/>
+
+  <!-- tagline -->
+  <text x="380" y="308" text-anchor="middle"
+        font-family="Georgia,'Times New Roman',serif" font-size="17" letter-spacing="1.4"
+        fill="#D8A63C">RIGHT PEOPLE &#8226; RIGHT TIME &#8226; RIGHT PRODUCT &#8226; RIGHT HAND</text>
+</svg>
