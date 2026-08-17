@@ -541,13 +541,24 @@
 
   <div class="foot-parent">
     <span class="fp-label">Powered by</span>
-    <!-- The supplied monogram. alt is empty because the name follows as real
-         text — otherwise a screen reader announces it twice. Setting the
-         wordmark as text rather than baking it into the image keeps it
-         selectable, scalable and translatable. -->
-    <img class="fp-mark" src="images/rr-mark.png" alt="">
-    <p class="fp-name">RR International Group</p>
-    <p class="fp-tag">Right People &middot; Right Time &middot; Right Product &middot; Right Hand</p>
+    <!-- The whole block is the link. rel="noopener" because target="_blank"
+         otherwise hands the new page a reference to this one through
+         window.opener. The mark's alt stays empty — the name follows as real
+         text, and the anchor takes its accessible name from that, so alt text
+         here would have it announced twice. -->
+    <a class="fp-link" href="https://asrithan22.github.io/Uat-RR-International-site/"
+       target="_blank" rel="noopener noreferrer">
+      <img class="fp-mark" src="images/rr-mark.png" alt="">
+      <span class="fp-name">RR International Group</span>
+      <span class="fp-tag">Right People &middot; Right Time &middot; Right Product &middot; Right Hand</span>
+      <span class="fp-visit">Visit the group site
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+        </svg>
+        <span class="sr-only">(opens in a new tab)</span>
+      </span>
+    </a>
   </div>
 
   <div class="foot-bot">

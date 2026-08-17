@@ -1101,21 +1101,49 @@ footer::before{
   font-size:11px; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
   color:var(--on-dark-3);
 }
+/* Visible only to screen readers — used to say a link opens in a new tab,
+   which is otherwise a surprise for anyone who cannot see the arrow icon. */
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+/* The whole parent block is one link, so the target is generous rather than
+   just the small mark. */
+.fp-link{
+  display:flex; flex-direction:column; align-items:center; gap:2px;
+  padding:14px 22px 12px; border-radius:var(--r-lg);
+  border:1px solid transparent;
+  transition:background .3s ease, border-color .3s ease, transform .3s cubic-bezier(.16,1,.3,1);
+}
+.fp-link:hover, .fp-link:focus-visible{
+  background:rgba(232,184,75,.07);
+  border-color:rgba(232,184,75,.28);
+  transform:translateY(-2px);
+}
 .fp-mark{
   width:clamp(120px, 15vw, 168px); height:auto;
   transition:transform .3s cubic-bezier(.16,1,.3,1);
 }
-.foot-parent:hover .fp-mark{ transform:translateY(-3px); }
+.fp-link:hover .fp-mark, .fp-link:focus-visible .fp-mark{ transform:scale(1.04); }
 .fp-name{
-  margin-top:4px;
+  margin-top:4px; display:block;
   font-family:Georgia,'Times New Roman',serif; font-size:clamp(17px,2vw,22px);
   font-weight:700; letter-spacing:.14em; text-transform:uppercase;
   color:#E8B84B;
 }
 .fp-tag{
+  display:block;
   font-size:clamp(11px,1.2vw,12.5px); font-weight:600; letter-spacing:.13em;
   text-transform:uppercase; color:#C9A24E;
 }
+.fp-visit{
+  display:inline-flex; align-items:center; gap:6px; margin-top:10px;
+  font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--on-dark-2);
+  transition:color .3s ease;
+}
+.fp-link:hover .fp-visit, .fp-link:focus-visible .fp-visit{ color:#F5D482; }
 @media(max-width:600px){
   .fp-mark{ width:min(140px, 42vw); }
   .fp-tag{ letter-spacing:.08em; }
