@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="">
+  <defs>
+    <radialGradient id="pg" cx=".35" cy=".3" r=".85">
+      <stop offset="0" stop-color="#FFA463"/><stop offset=".6" stop-color="#F2703A"/><stop offset="1" stop-color="#C94E1E"/>
+    </radialGradient>
+  </defs>
+  <!-- ring behind -->
+  <ellipse cx="60" cy="62" rx="52" ry="16" fill="none" stroke="#E8722B" stroke-width="7" opacity=".9" transform="rotate(-18 60 62)"/>
+  <circle cx="60" cy="58" r="33" fill="url(#pg)"/>
+  <!-- surface bands -->
+  <g fill="#fff" opacity=".26">
+    <ellipse cx="52" cy="46" rx="15" ry="5" transform="rotate(-14 52 46)"/>
+    <ellipse cx="68" cy="66" rx="12" ry="4" transform="rotate(-14 68 66)"/>
+    <ellipse cx="47" cy="70" rx="8" ry="3" transform="rotate(-14 47 70)"/>
+  </g>
+  <!-- ring front, drawn over the sphere so it reads as encircling -->
+  <path d="M13 71 a52 16 0 0 0 74 9" fill="none" stroke="#E8722B" stroke-width="7" stroke-linecap="round" transform="rotate(-18 60 62)"/>
+</svg>

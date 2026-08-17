@@ -1189,15 +1189,13 @@ footer::before{
 .section > .wrap{ position:relative; z-index:1; }
 
 .floaties{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-.floaties i{
-  position:absolute; display:block; border-radius:50%;
+.floaties img{
+  position:absolute; display:block;
   will-change:transform;
   animation:drift var(--dur, 22s) ease-in-out var(--delay, 0s) infinite;
+  /* a soft lift so a character does not look pasted flat onto the surface */
+  filter:drop-shadow(0 6px 12px rgba(46,42,61,.10));
 }
-/* rings read lighter than discs and keep the field from looking like spots */
-.floaties i.ring{ background:none !important; border:solid var(--w, 7px) var(--c); }
-/* a squashed rounded square, rotated — reads as a kite/balloon rather than a dot */
-.floaties i.kite{ border-radius:26% 74% 30% 70% / 62% 30% 70% 38%; }
 
 @keyframes drift{
   0%,100%{ transform:translate3d(0,0,0) rotate(0deg)   scale(1);    }

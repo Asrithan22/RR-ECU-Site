@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="">
+  <!-- tuft -->
+  <path d="M60 20 q4 -12 10 -14 q-2 9 -3 13" fill="#2E9BD6"/>
+  <!-- body -->
+  <ellipse cx="60" cy="66" rx="34" ry="36" fill="#39B4E8"/>
+  <!-- belly -->
+  <ellipse cx="60" cy="76" rx="22" ry="23" fill="#FFD84D"/>
+  <!-- wing -->
+  <path d="M30 62 q-12 12 -2 26 q10 4 16 -6 Z" fill="#2E9BD6"/>
+  <!-- eyes -->
+  <circle cx="49" cy="56" r="8" fill="#fff"/><circle cx="71" cy="56" r="8" fill="#fff"/>
+  <circle cx="50" cy="57" r="4" fill="#22303F"/><circle cx="72" cy="57" r="4" fill="#22303F"/>
+  <circle cx="51.6" cy="55.4" r="1.5" fill="#fff"/><circle cx="73.6" cy="55.4" r="1.5" fill="#fff"/>
+  <!-- beak -->
+  <path d="M60 64 l8 6 -8 6 -8 -6 Z" fill="#F5A623"/>
+  <!-- feet -->
+  <path d="M50 100 v7 M70 100 v7" stroke="#F5A623" stroke-width="5" stroke-linecap="round"/>
+</svg>

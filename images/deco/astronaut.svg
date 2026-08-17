@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="">
+  <!-- arms + legs behind the body -->
+  <g stroke="#E6ECF5" stroke-width="14" stroke-linecap="round">
+    <path d="M36 62 L20 78"/><path d="M84 62 L100 78"/>
+    <path d="M50 96 L46 112"/><path d="M70 96 L74 112"/>
+  </g>
+  <g fill="#9AA6B8">
+    <circle cx="19" cy="80" r="8"/><circle cx="101" cy="80" r="8"/>
+    <ellipse cx="45" cy="113" rx="9" ry="6"/><ellipse cx="75" cy="113" rx="9" ry="6"/>
+  </g>
+  <!-- suit -->
+  <rect x="36" y="52" width="48" height="48" rx="18" fill="#F4F7FC"/>
+  <!-- chest badge: little rocket -->
+  <rect x="52" y="66" width="16" height="22" rx="5" fill="#DCE6F2"/>
+  <path d="M60 70 c3 3 4 7 4 10 l-4 4 -4 -4 c0-3 1-7 4-10 Z" fill="#E8722B"/>
+  <!-- control lights -->
+  <circle cx="45" cy="70" r="3" fill="#39B4E8"/><circle cx="45" cy="80" r="3" fill="#F2557F"/>
+  <!-- helmet -->
+  <circle cx="60" cy="38" r="27" fill="#E6ECF5"/>
+  <circle cx="60" cy="38" r="21" fill="#BFE3F7"/>
+  <path d="M45 28 a21 21 0 0 1 16 -6 q-12 3 -16 12 Z" fill="#fff" opacity=".85"/>
+  <!-- face inside the visor -->
+  <circle cx="53" cy="38" r="3.4" fill="#3A2B1E"/><circle cx="67" cy="38" r="3.4" fill="#3A2B1E"/>
+  <path d="M53 46 q7 6 14 0" stroke="#3A2B1E" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+  <!-- antenna -->
+  <path d="M60 11 v-7" stroke="#9AA6B8" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="60" cy="3" r="4" fill="#F2557F"/>
+</svg>

@@ -767,8 +767,10 @@
      these anyway, but then they are just static confetti nobody asked for. */
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const HUES = ['#FF7DA0','#FFC94D','#3FD6C4','#9E77E0','#5AA9F0','#6BD66C'];
-  const SHAPES = ['', 'ring', 'kite', '', 'ring', 'kite', ''];
+  /* Characters rather than abstract discs. Each section gets a different
+     starting point in the list so the same face is not in the same place twice
+     down the page. */
+  const CHARS = ['planet','star','bird','rocket','lion','balloon','astronaut','star','planet'];
 
   /* The vivid CTA is already saturated and the festival section is busy —
      shapes there would be noise, so only the calmer light surfaces get them. */
@@ -777,28 +779,40 @@
     layer.className = 'floaties';
     layer.setAttribute('aria-hidden', 'true');
 
-    for(let i=0;i<9;i++){
-      const el = document.createElement('i');
-      const hue = HUES[(i + si*2) % HUES.length];
-      const shape = SHAPES[(i + si) % SHAPES.length];
-      if(shape) el.className = shape;
+    for(let i=0;i<7;i++){
+      const el = document.createElement('img');
+      el.src = 'images/deco/' + CHARS[(i + si*3) % CHARS.length] + '.svg';
+      el.alt = '';
+      el.decoding = 'async';
+      el.loading = 'lazy';
 
-      const size = 26 + ((i*37 + si*13) % 78);          /* 26-104px */
-      el.style.setProperty('--c', hue);
+      /* Bigger than the old dots — a character needs room to be recognisable,
+         and below about 50px these read as coloured smudges. */
+      const size = 54 + ((i*29 + si*17) % 62);           /* 54-116px */
       el.style.width  = size + 'px';
       el.style.height = size + 'px';
-      el.style.background = hue;
-      el.style.setProperty('--w', Math.max(5, Math.round(size/9)) + 'px');
-      /* A shape behind a card is invisible — the cards are opaque — so the only
-         region that actually matters is the section's own eyebrow, title and
-         lede, which sit on the bare background at the top left. Keep out of
-         that corner and the rest of the section is fair game. */
-      const left = (i % 2 === 0) ? (1 + (i*7 + si*5) % 24) : (72 + (i*5 + si*3) % 25);
-      let top = 4 + (i*11 + si*17) % 84;
-      if(left < 58 && top < 34) top += 40;
-      el.style.left = left + '%';
-      el.style.top  = top + '%';
-      el.style.opacity = (0.16 + ((i*13 + si*7) % 16)/100).toFixed(2);
+      /* Hand-placed rather than scattered. The cards are opaque and fill the
+         middle of every section, so a character dropped at random is simply
+         behind one and never seen — the first pass lost 5 of 7 that way. These
+         spots are the areas that stay bare: the gutters either side, the
+         top-right beside the heading (capped at 19ch, so it never reaches
+         there), and the foot of the section.
+
+         Left-hand spots sit below 58% on purpose. A section's heading and lede
+         start at the wrap's left edge, so as the gutter narrows a character
+         parked at 2% starts touching them — it did at 1440px and below. The
+         right-hand side has no such problem: the lede caps at 60ch and never
+         reaches it. */
+      const SPOTS = [
+        [80,  5], [90, 26], [93, 58], [2, 62],
+        [1, 78], [74, 90], [12, 93]
+      ];
+      const spot = SPOTS[(i + si) % SPOTS.length];
+      el.style.left = spot[0] + '%';
+      el.style.top  = spot[1] + '%';
+      /* Meant to be seen, not sensed. The old tinted dots sat at .16-.32; a
+         character at that level just looks like a smudge. */
+      el.style.opacity = (0.72 + ((i*13 + si*7) % 18)/100).toFixed(2);
       el.style.setProperty('--dur', (16 + (i*3 + si*2) % 16) + 's');
       el.style.setProperty('--delay', '-' + ((i*4 + si*3) % 18) + 's');
       layer.appendChild(el);
