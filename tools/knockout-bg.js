@@ -22,7 +22,11 @@ const path = require('path');
 
 const args = process.argv.slice(2).filter(a => a !== '--tol' || false);
 const tolIdx = process.argv.indexOf('--tol');
-const TOL = tolIdx > -1 ? Number(process.argv[tolIdx + 1]) || 60 : 60;
+/* Number(x) || 60 silently ignores --tol 0, because zero is falsy — and 0 is a
+   real setting here: it crops an already-transparent image without touching a
+   single edge pixel. Test for a finite number instead. */
+const tolRaw = tolIdx > -1 ? Number(process.argv[tolIdx + 1]) : NaN;
+const TOL = Number.isFinite(tolRaw) ? tolRaw : 60;
 const positional = process.argv.slice(2).filter((a, i, arr) =>
   !a.startsWith('--') && arr[i - 1] !== '--tol');
 
