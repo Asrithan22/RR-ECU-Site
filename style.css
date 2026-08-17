@@ -119,6 +119,10 @@
   --sh-blue:0 12px 32px rgba(35,135,232,.28);
 
   --r-sm:8px; --r-md:14px; --r-lg:22px; --r-xl:32px;
+
+  /* Height of the cartoon band at the foot of the banner. The hero copy and the
+     stage label both reserve exactly this, so they stay in step with it. */
+  --band-h:clamp(96px, 18vh, 190px);
 }
 
 /* ---------- 2. RESET ---------- */
@@ -449,7 +453,7 @@ a{ color:inherit; text-decoration:none; }
   /* Must clear two things: the back-to-top button (86px off the bottom) and
      the cartoon band, which is width/6 tall and now runs the full width. Same
      reservation as the hero copy uses. */
-  bottom:calc(26px + clamp(80px, 17vw, 250px)); z-index:3;
+  bottom:calc(22px + var(--band-h)); z-index:3;
   font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
   color:var(--ink-500); text-align:right; pointer-events:none;
 }
@@ -1137,17 +1141,25 @@ footer::before{
    and never in the way of a click. */
 .hero-cartoons{
   position:absolute; left:0; right:0; bottom:0; z-index:2;
-  /* full-bleed: let width drive height so the band spans edge to edge.
-     object-fit:contain squeezed it into a narrow centred strip instead. */
-  width:100%; height:auto;
+  /* Capped rather than pure full-bleed. Letting width drive height made the
+     band width/6 tall — 318px on a wide window — and the copy above it was
+     pushed clean off the top of a short viewport. */
+  width:100%; height:auto; max-height:var(--band-h);
+  object-fit:contain; object-position:center bottom;
   pointer-events:none; user-select:none;
   opacity:.96;
 }
 
 /* keep the hero copy clear of the cartoon band */
-/* the band is width/6 tall, so reserve that much plus breathing room */
-#hero-copy{ padding-bottom:calc(4vh + clamp(80px, 17vw, 250px)); }
-#hero-wrapper.no3d #hero-copy{ padding-bottom:calc(48px + clamp(80px, 17vw, 250px)); }
+/* Centred between the fixed nav and the band, not bottom-aligned. Bottom
+   alignment plus a large reserve pushed the first heading line behind the nav
+   once the viewport got short. */
+#hero-copy{
+  justify-content:center;
+  padding-top:clamp(88px, 11vh, 116px);
+  padding-bottom:calc(16px + var(--band-h));
+}
+#hero-wrapper.no3d #hero-copy{ padding-bottom:calc(40px + var(--band-h)); }
 
 /* Festival video card */
 .fest-video{
@@ -1291,3 +1303,11 @@ footer::before{
 .spon-card li:nth-child(5){ --d:.38s; }
 .spon-card li:nth-child(6){ --d:.45s; }
 .spon-card li:nth-child(7){ --d:.52s; }
+
+/* Short viewports cannot fit badge + headline + sub + buttons + cue + band.
+   Shrink the band and drop the cue rather than let the headline clip. */
+@media (max-height:780px){
+  :root{ --band-h:clamp(78px, 13vh, 132px); }
+  .hero-scrollcue{ display:none; }
+  #hero-copy{ padding-top:clamp(84px, 10vh, 100px); }
+}
